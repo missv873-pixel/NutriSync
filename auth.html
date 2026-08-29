@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NutriSync - Authentication</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="auth.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="auth-header">
+
+        <h1>NutriSync</h1>
+
+        <p>Your Daily Nutrition Companion</p>
+
+    </header>
+
+
+    <!-- =========================
+         AUTHENTICATION CONTAINER
+    ========================== -->
+
+    <main class="auth-container">
+
+
+        <!-- =========================
+             LOGIN FORM
+        ========================== -->
+
+        <section
+            id="loginForm"
+            class="auth-card"
+        >
+
+            <h2>Welcome Back 👋</h2>
+
+            <p class="auth-description">
+                Login to continue tracking your nutrition.
+            </p>
+
+
+            <form id="loginFormElement">
+
+                <label for="loginEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                >
+
+
+                <label for="loginPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                >
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Login
+                </button>
+
+            </form>
+
+
+            <p
+                id="loginMessage"
+                class="message"
+            ></p>
+
+
+            <div class="switch-form">
+
+                <span>
+                    Don't have an account?
+                </span>
+
+                <button
+                    type="button"
+                    onclick="showRegister()"
+                    class="link-button"
+                >
+                    Register
+                </button>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================
+             REGISTRATION FORM
+        ========================== -->
+
+        <section
+            id="registerForm"
+            class="auth-card"
+            style="display: none;"
+        >
+
+            <h2>Create Account ✨</h2>
+
+            <p class="auth-description">
+                Create your NutriSync account.
+            </p>
+
+
+            <form id="registerFormElement">
+
+
+                <label for="registerName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="registerName"
+                    placeholder="Enter your name"
+                    autocomplete="name"
+                >
+
+
+                <label for="registerEmail">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                >
+
+
+                <label for="registerPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Minimum 6 characters"
+                    autocomplete="new-password"
+                >
+
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    placeholder="Re-enter your password"
+                    autocomplete="new-password"
+                >
+
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <p
+                id="registerMessage"
+                class="message"
+            ></p>
+
+
+            <div class="switch-form">
+
+                <span>
+                    Already have an account?
+                </span>
+
+                <button
+                    type="button"
+                    onclick="showLogin()"
+                    class="link-button"
+                >
+                    Login
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026 NutriSync
+        </p>
+
+    </footer>
+
+
+    <script src="auth.js"></script>
+
+</body>
+
+</html>

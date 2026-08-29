@@ -1,0 +1,357 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NutriSync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+    <!-- Header -->
+    <header>
+        <h1>NutriSync</h1>
+        <p>Your Daily Nutrition Companion</p>
+        <button onclick="logoutUser()">Logout</button>      
+        <div class="header-top">
+
+
+        <select id="languageSelect" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="mr">मराठी</option>
+        </select>
+
+    </div>
+    </header>
+
+
+    <!-- Main Container -->
+    <main>
+
+        <!-- Welcome Section -->
+        <section class="welcome">
+            <h2>Greetings👋</h2>
+            <p>Track your nutrition and build healthier eating habits.</p>
+        </section>
+
+
+        <!-- Daily Nutrition -->
+        <section class="nutrition-card">
+
+            <h2 id="nutritionTitle">Today's Nutrition</h2>
+
+            <div class="nutrition-summary">
+
+                <div class="nutrition-item">
+                    <span>🔥</span>
+                    <h3 id="totalCalories">0</h3>
+                    <p id="caloriesLabel">Calories</p>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>💪</span>
+                    <h3 id="totalProtein">0 g</h3>
+                    <p id="proteinLabel">Protein</p>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>🍚</span>
+                    <h3 id="totalCarbs">0 g</h3>
+                    <p id="carbsLabel">Carbs</p>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>🥑</span>
+                    <h3 id="totalFat">0 g</h3>
+                    <p id="fatLabel">Fat</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Add Food -->
+         <!-- Add New Food -->
+<div class="custom-food-option">
+
+    <p>Can't find your food?</p>
+
+    <button type="button" onclick="showCustomFoodForm()">
+        + Add New Food
+    </button>
+
+</div>
+
+
+
+
+
+<!-- Custom Food Form -->
+
+<div id="customFoodForm" class="custom-food-form" style="display: none;">
+
+    <h3>Add Your Own Food</h3>
+
+    <label for="customFoodName">
+        Food Name
+    </label>
+
+    <input
+        type="text"
+        id="customFoodName"
+        placeholder="Example: Chicken Biryani"
+    >
+
+
+    <label for="customCalories">
+        Calories per 100 g
+    </label>
+
+    <input
+        type="number"
+        id="customCalories"
+        placeholder="Example: 195"
+        min="0"
+    >
+
+
+    <label for="customProtein">
+        Protein per 100 g (g)
+    </label>
+
+    <input
+        type="number"
+        id="customProtein"
+        placeholder="Example: 6.5"
+        min="0"
+        step="0.1"
+    >
+
+
+    <label for="customCarbs">
+        Carbohydrates per 100 g (g)
+    </label>
+
+    <input
+        type="number"
+        id="customCarbs"
+        placeholder="Example: 25"
+        min="0"
+        step="0.1"
+    >
+
+
+    <label for="customFat">
+        Fat per 100 g (g)
+    </label>
+
+    <input
+        type="number"
+        id="customFat"
+        placeholder="Example: 7"
+        min="0"
+        step="0.1"
+    >
+
+
+    <button type="button" onclick="saveCustomFood()">
+        Save Food
+    </button>
+
+</div>
+        <section class="add-food">
+
+    <h2 id="addFoodTitle">Add Food</h2>
+
+    <label for="foodSelect" id="foodLabel">
+        Select Food
+    </label>
+
+    <select id="foodSelect">
+
+        <option value="">-- Select Food --</option>
+
+        <option value="rice">Rice</option>
+        <option value="dal">Dal</option>
+        <option value="roti">Roti</option>
+        <option value="apple">Apple</option>
+        <option value="banana">Banana</option>
+        <option value="poha">Poha</option>
+        <option value="paneer">Paneer</option>
+
+    </select>
+
+
+    <label for="quantity" id="quantityLabel">
+        Quantity (grams)
+    </label>
+
+    <input
+        type="number"
+        id="quantity"
+        placeholder="Enter quantity"
+        min="1"
+    >
+
+
+    <label for="mealType" id="mealLabel">
+        Select Meal
+    </label>
+
+    <select id="mealType">
+
+        <option value="">-- Select Meal --</option>
+
+        <option value="breakfast">Breakfast</option>
+        <option value="lunch">Lunch</option>
+        <option value="snack">Snack</option>
+        <option value="dinner">Dinner</option>
+
+    </select>
+
+
+    <button onclick="addFood()" id="addFoodButton">
+        + Add Food
+    </button>
+
+</section>
+
+        <!-- Today's Food -->
+         <section class="habits-section">
+            <h2 id="habitsTitle"> Today's Eating Habits</h2>
+            <div class="habit-item">
+                <span>Breakfast</span>
+                <span id="breakfastStatus">Not Recorded</span>
+            </div>
+            <div class="habit-item">
+                <span>Lunch</span>
+                <span id="lunchStatus">Not Recorded</span>
+            </div>
+            <div class="habit-item">
+                <span>Snack</span>
+                <span id="snackStatus">Not Recorded</span>
+                </div>
+                <div class="habit-item">
+                <span>Dinner</span>
+                <span id="dinnerStatus">Not Recorded</span>
+                </div>
+                <div class="habit-summary">
+                    
+                    <p>
+                        Meals recorded today:
+                        <strong id="mealCount">0</strong></p>
+                    <p id="habitMessage">
+                        Start recording your meals today.
+                    </p>
+                    </div>
+
+         </section>
+
+         <section class="today-meals">
+            <h2 id="todayMealsTitle">Today's Meals</h2>
+            <div class="meal-card">
+                <h3>Breakfast</h3>
+                <div id="breakfastFoods">
+                    <p class="no-meal">No breakfast recorded.</p>
+                </div>
+            </div>
+            <div class="meal-card">
+                <h3>Lunch</h3>
+                <div id="lunchFoods">
+                    <p class="no-meal">No lunch recorded.</p>
+                    </div>
+            </div>
+            <div class="meal-card">
+                <h3>Snack</h3>
+                <div id="snackFoods">
+                    <p class="no-meal">No snack recorded.</p>
+                </div>
+            </div>
+            <div class="meal-card">
+                <h3>Dinner</h3>
+                <div id="dinnerFoods">
+                    <p class="no-meal">No dinner recorded.</p>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="food-history">
+
+            <h2 id="historyTitle">Nutrition History</h2>
+
+            
+
+                <p >
+                    View your previous nutrition records.
+                </p>
+                <button onclick="showHistory()">
+                    View History
+                </button>
+                <div id="historyList"></div>
+
+        </section>
+
+
+        <!-- Recipe Section -->
+        <section class="recipe-preview">
+
+            <h2 id="recipeTitle">🍲 Healthy Recipes</h2>
+
+            <p>
+                Discover healthy recipes and add your own favourites.
+            </p>
+
+            <button onclick="openRecipes()">
+                Explore Recipes
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>© 2026 NutriSync</p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+    <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDN0XknQAArjBofs1VLVelj-VSR9WDjxeY",
+    authDomain: "nutrisync-aace8.firebaseapp.com",
+    projectId: "nutrisync-aace8",
+    storageBucket: "nutrisync-aace8.firebasestorage.app",
+    messagingSenderId: "249865797098",
+    appId: "1:249865797098:web:60aa737e52b522ed3f4693",
+    measurementId: "G-21E22KT2TR"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+
+</body>
+</html>
