@@ -32,6 +32,59 @@ body {
 /* ==========================================
    HEADER
 ========================================== */
+.header-top {
+    max-width: 700px;
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.header-title {
+    text-align: left;
+}
+
+.logout-btn {
+
+    width: auto !important;
+
+    margin: 0 !important;
+
+    padding: 8px 13px !important;
+
+    border: 1px solid
+        rgba(255,255,255,0.5);
+
+    border-radius: 9px;
+
+    background:
+        rgba(255,255,255,0.15);
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: none !important;
+
+}
+
+
+.logout-btn:hover {
+
+    background:
+        rgba(255,255,255,0.25);
+
+    transform: none;
+
+}
+
 
 header {
     background: linear-gradient(
@@ -48,6 +101,7 @@ header {
     text-align: center;
 
     box-shadow: 0 8px 25px rgba(63, 125, 88, 0.2);
+    position: relative;
 }
 
 header h1 {
@@ -61,7 +115,78 @@ header p {
     font-size: 14px;
     opacity: 0.9;
 }
+/* ==========================================
+   NAVIGATION BAR
+========================================== */
 
+.navbar {
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 12px 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+.nav-logo {
+
+    font-size: 20px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+}
+
+
+.nav-links {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+}
+
+
+.nav-links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+}
+
+
+.nav-links a:hover {
+
+    opacity: 0.75;
+
+}
+
+
+.header-title {
+
+    text-align: center;
+
+    margin-top: 12px;
+
+}
 
 /* ==========================================
    MAIN
@@ -381,6 +506,15 @@ footer {
 ========================================== */
 
 @media (max-width: 480px) {
+    .header-top {
+    align-items: flex-start;
+}
+
+.header-title h1 {
+    font-size: 28px;
+}
+
+
 
     header {
         padding: 24px 18px 40px;
@@ -409,7 +543,52 @@ footer {
     .nutrition-item h3 {
         font-size: 17px;
     }
+.navbar {
 
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    padding: 12px 5px;
+
+}
+
+
+.nav-links {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 8px;
+
+}
+
+
+.nav-links a {
+
+    text-align: center;
+
+    padding: 8px 4px;
+
+}
+
+
+.nav-links .logout-btn {
+
+    width: 100% !important;
+
+}
+
+
+.header-title {
+
+    margin-top: 10px;
+
+}
 }
 
 
@@ -600,30 +779,4 @@ footer {
 .custom-food-form button {
     margin-top: 15px;
 }
-.logout-button {
-    width: auto;
-    margin-top: 12px;
 
-    padding: 8px 18px;
-
-    border: none;
-
-    border-radius: 20px;
-
-    background: white;
-
-    color: var(--primary);
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-    cursor: pointer;
-
-    box-shadow: none;
-}
-.logout-button:hover {
-    background: var(--primary-light);
-
-    transform: none;
-}
