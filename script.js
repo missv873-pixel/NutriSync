@@ -1,4 +1,4 @@
-const API_KEY = "uB0BWB5WStMxhXpEPvaZePnXOLD7kDTZ6YoEmmSo"
+
 
 /* ==========================================
    AUTHENTICATION CHECK
