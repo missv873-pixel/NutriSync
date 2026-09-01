@@ -99,8 +99,15 @@
                     placeholder="Enter your password"
                     autocomplete="current-password"
                 >
-
-
+                <div class="remember-row">
+                    <label class="remember-label">
+                    <input
+                        type="checkbox"
+                        id="rememberMe"
+                    >
+                    <span>Remember Me</span>
+                    </label> 
+                    </div>
                 <button
                     type="submit"
                     class="primary-button"
@@ -109,6 +116,21 @@
                 </button>
 
             </form>
+            <!--divider-->
+            <div class ="divider">
+                <span>OR</span>
+            </div>
+            <!--Google login-->
+            <button 
+            type = "button"
+            class = "google-button"
+            onclick="loginWithGoogle()"
+            >
+        <span class = "google-icon">
+            G
+        </span>
+        Continue with Google
+        </button>
 
 
             <p
@@ -256,7 +278,7 @@
     </footer>
 
 
-    <script src="auth.js"></script>
+    <script type="module" src="auth.js"></script>
 
 </body>
 
