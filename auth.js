@@ -319,6 +319,11 @@ function loginUser() {
             .getElementById("loginPassword")
             .value;
 
+            const rememberMe=
+            document
+            .getElementById("rememberMe")
+            .checked;
+
 
     const message =
         document.getElementById(
@@ -404,6 +409,16 @@ function loginUser() {
             "nutrisyncLoggedIn",
             "true"
         );
+        if(rememberMe){
+            localStorage.setItem(
+            "nutrisyncRememberMe",
+            "true"
+            );
+        }else{
+            localStorage.removeItem(
+            "nutrisyncRememberMe",
+            );
+        }
 
 
         localStorage.setItem(
