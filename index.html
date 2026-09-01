@@ -10,27 +10,51 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="navigation.css">
 </head>
 
 <body>
 
 
-    <!-- Header -->
-    <header>
-        <h1>NutriSync</h1>
-        <p>Your Daily Nutrition Companion</p>
-        <button onclick="logoutUser()">Logout</button>      
-        <div class="header-top">
+   
+<header>
 
+    <!-- Shared Navigation -->
+    <div id="navigation"></div>
 
-        <select id="languageSelect" onchange="changeLanguage(this.value)">
+    <!-- Language -->
+    <div class="header-top">
+
+        <select
+            id="languageSelect"
+            onchange="changeLanguage(this.value)">
+
             <option value="en">English</option>
-            <option value="hi">हिन्दी</option>
-            <option value="mr">मराठी</option>
+
+            <option value="hi">
+                हिन्दी
+            </option>
+
+            <option value="mr">
+                मराठी
+            </option>
+
         </select>
 
     </div>
-    </header>
+
+    <!-- Page Title -->
+    <div class="header-title">
+
+        <h1>NutriSync</h1>
+
+        <p>
+            Your Daily Nutrition Companion
+        </p>
+
+    </div>
+
+</header>
 
 
     <!-- Main Container -->
@@ -311,7 +335,7 @@
                 Discover healthy recipes and add your own favourites.
             </p>
 
-            <button onclick="openRecipes()">
+            <button onclick="window.location.href='recipe.html'">
                 Explore Recipes
             </button>
 
@@ -329,28 +353,12 @@
 
 
     <script src="script.js"></script>
-    <script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-analytics.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDN0XknQAArjBofs1VLVelj-VSR9WDjxeY",
-    authDomain: "nutrisync-aace8.firebaseapp.com",
-    projectId: "nutrisync-aace8",
-    storageBucket: "nutrisync-aace8.firebasestorage.app",
-    messagingSenderId: "249865797098",
-    appId: "1:249865797098:web:60aa737e52b522ed3f4693",
-    measurementId: "G-21E22KT2TR"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+    <script>
+    fetch("navigation.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("navigation").innerHTML = data;
+        });
 </script>
 
 </body>
