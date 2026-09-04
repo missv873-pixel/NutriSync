@@ -15,7 +15,7 @@ function checkAuthentication() {
 
     }
 }
-
+localStorage.setItem("nutrisyncLoggedIn", "true");
 checkAuthentication();
 
 
