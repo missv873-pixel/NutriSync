@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NutriSync - Dashboard</title>
+
+    <link
+        rel="stylesheet"
+        href="dashboard.css"
+    >
+    <link
+    rel="stylesheet"
+    href="navigation.css"
+>
+    
+
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+<header>
+
+    <!-- Shared Navigation -->
+    <div id="navigation"></div>
+
+    <div class="header-content">
+
+        <div>
+            <h1>NutriSync</h1>
+            <p>Nutrition Dashboard</p>
+        </div>
+
+    </div>
+
+</header>
+
+
+    <main>
+
+        <!-- WELCOME -->
+
+        <section class="welcome-card">
+
+            <h2>Today's Overview 👋</h2>
+
+            <p>
+                Here's a summary of your nutrition intake today.
+            </p>
+
+        </section>
+
+
+        <!-- NUTRITION SUMMARY -->
+
+        <section>
+
+            <h2>Today's Nutrition</h2>
+
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <span>🔥</span>
+
+                    <h3 id="dashboardCalories">
+                        0 kcal
+                    </h3>
+
+                    <p>Calories</p>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>💪</span>
+
+                    <h3 id="dashboardProtein">
+                        0 g
+                    </h3>
+
+                    <p>Protein</p>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>🍚</span>
+
+                    <h3 id="dashboardCarbs">
+                        0 g
+                    </h3>
+
+                    <p>Carbs</p>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>🥑</span>
+
+                    <h3 id="dashboardFat">
+                        0 g
+                    </h3>
+
+                    <p>Fat</p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- MEAL SUMMARY -->
+
+        <section>
+
+            <h2>Today's Meals</h2>
+
+            <div class="meal-summary">
+
+                <div>
+                    <span>Breakfast</span>
+                    <strong id="breakfastCount">0</strong>
+                </div>
+
+                <div>
+                    <span>Lunch</span>
+                    <strong id="lunchCount">0</strong>
+                </div>
+
+                <div>
+                    <span>Snack</span>
+                    <strong id="snackCount">0</strong>
+                </div>
+
+                <div>
+                    <span>Dinner</span>
+                    <strong id="dinnerCount">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- REPORT -->
+
+        <section>
+
+            <h2>Nutrition Report</h2>
+
+            <div class="report-card">
+
+                <h3>Today's Summary</h3>
+
+                <p id="reportText">
+                    No food has been recorded today.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- HISTORY -->
+
+        <section>
+
+            <h2>Nutrition History</h2>
+
+            <div id="historyList">
+
+                <p class="empty-message">
+                    No previous records available.
+                </p>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <footer>
+
+        <p>© 2026 NutriSync</p>
+
+    </footer>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="navigation.js"></script>
+    <script>
+
+    fetch("navigation.html")
+
+        .then(response => response.text())
+
+        .then(data => {
+
+            document.getElementById("navigation").innerHTML = data;
+
+        });
+      
+
+</script>
+
+</body>
+
+</html>

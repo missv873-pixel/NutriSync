@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NutriSync - Health Assessment</title>
+
+    <link
+        rel="stylesheet"
+        href="health.css"
+    >
+    <link
+    rel="stylesheet"
+    href="navigation.css"
+>
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Navigation -->
+    <div id="navigation"></div>
+
+
+    <!-- Page Title -->
+    <div class="header-title">
+
+        <h1>Health Assessment</h1>
+
+        <p>
+            Understand your health using your height and weight.
+        </p>
+
+    </div>
+
+</header>
+
+
+    <main>
+
+
+        <!-- Health Input -->
+
+        <section class="health-card">
+
+            <h2>Enter Your Details</h2>
+
+            <label for="height">
+                Height (cm)
+            </label>
+
+            <input
+                type="number"
+                id="height"
+                placeholder="Enter your height"
+                min="1"
+            >
+
+
+            <label for="weight">
+                Weight (kg)
+            </label>
+
+            <input
+                type="number"
+                id="weight"
+                placeholder="Enter your weight"
+                min="1"
+            >
+
+
+            <button onclick="calculateBMI()">
+                Calculate BMI
+            </button>
+
+        </section>
+
+
+
+        <!-- Result -->
+
+        <section
+            class="result-card"
+            id="resultCard"
+        >
+
+            <h2>Your Health Result</h2>
+
+
+            <div class="result-item">
+
+                <span>BMI</span>
+
+                <strong id="bmiResult">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span>Health Status</span>
+
+                <strong id="healthStatus">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="recommendation">
+
+                <h3>Recommendation</h3>
+
+                <p id="recommendationText">
+                    Enter your height and weight to get a recommendation.
+                </p>
+
+            </div>
+
+        </section>
+
+<!-- WATER TRACKER -->
+
+<section class="water-card">
+
+    <h2>💧 Daily Water Intake</h2>
+
+    <p class="water-goal">
+        Daily Goal: 8 glasses 💧
+    </p>
+
+    <div class="water-counter">
+
+        <button
+            type="button"
+            onclick="removeWater()"
+            class="water-btn"
+        >
+            −
+        </button>
+
+        <div class="water-count">
+            <strong id="waterCount">0</strong>
+            <span>/ 8 glasses</span>
+        </div>
+
+        <button
+            type="button"
+            onclick="addWater()"
+            class="water-btn"
+        >
+            +
+        </button>
+
+    </div>
+
+    <div class="water-progress">
+
+        <div
+            id="waterProgress"
+            class="water-progress-bar"
+        ></div>
+
+    </div>
+
+    <p
+        id="waterMessage"
+        class="water-message"
+    >
+        Start tracking your water intake! 💧
+    </p>
+
+</section>
+<!-- DAILY ACTIVITY TRACKER -->
+
+<section class="activity-card">
+
+    <h2>🏃 Daily Activity</h2>
+
+    <p>Track your activity for today.</p>
+
+    <label for="steps">
+        🚶 Steps
+    </label>
+
+    <input
+        type="number"
+        id="steps"
+        placeholder="Enter steps"
+        min="0"
+    >
+
+    <label for="exerciseMinutes">
+        🏃 Exercise Minutes
+    </label>
+
+    <input
+        type="number"
+        id="exerciseMinutes"
+        placeholder="Enter exercise minutes"
+        min="0"
+    >
+
+    <label for="workoutType">
+        🏋️ Workout Type
+    </label>
+
+    <select id="workoutType">
+
+        <option value="">
+            -- Select Workout --
+        </option>
+
+        <option value="Walking">Walking</option>
+        <option value="Running">Running</option>
+        <option value="Cycling">Cycling</option>
+        <option value="Yoga">Yoga</option>
+        <option value="Gym">Gym</option>
+        <option value="Other">Other</option>
+
+    </select>
+
+    <button
+        type="button"
+        onclick="saveActivity()"
+    >
+        Save Activity
+    </button>
+
+    <div class="activity-summary">
+
+        <h3>Today's Activity</h3>
+
+        <p>
+            Steps:
+            <strong id="stepsResult">0</strong>
+        </p>
+
+        <p>
+            Exercise:
+            <strong id="exerciseResult">0</strong> minutes
+        </p>
+
+        <p>
+            Workout:
+            <strong id="workoutResult">Not recorded</strong>
+        </p>
+
+    </div>
+<!-- EXERCISE TIMER -->
+
+<div class="exercise-timer">
+
+    <h3>⏱️ Exercise Timer</h3>
+
+    <div id="timerDisplay">
+        00:00
+    </div>
+
+    <div class="timer-buttons">
+
+        <button
+            type="button"
+            onclick="startTimer()"
+        >
+            ▶ Start
+        </button>
+
+        <button
+            type="button"
+            onclick="pauseTimer()"
+        >
+            ⏸ Pause
+        </button>
+
+        <button
+            type="button"
+            onclick="resetTimer()"
+        >
+            🔄 Reset
+        </button>
+
+    </div>
+
+</div>
+</section>
+    </main>
+
+
+    <footer>
+
+        <p>© 2026 NutriSync</p>
+
+    </footer>
+
+
+    <script src="health.js"></script>
+    <script>
+    fetch("navigation.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("navigation").innerHTML = data;
+        });
+</script>
+
+</body>
+
+</html>

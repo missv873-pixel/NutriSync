@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition & Health Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="navigation.css">
+</head>
+
+<body>
+
+<header>
+    <!-- Shared Navigation -->
+    <div id="navigation"></div>
+
+    <!-- Page Title -->
+    <div class="page-title">
+        <h1>🥗 NutriCare</h1>
+        <p>Nutrition & Health Tracking</p>
+    </div>
+
+</header>
+
+
+<!-- HOME -->
+<section id="home" class="hero">
+    <h2>Healthy Eating, Healthy Living</h2>
+    <p>Plan your meals and maintain a healthy lifestyle.</p>
+    <button onclick="showMessage()">Get Started</button>
+</section>
+
+<!-- MEAL PLANNING -->
+<section id="meals">
+    <h2>🍱 Indian Meal Planner</h2>
+
+    <div class="filter">
+        <button onclick="showMeals('all')">All</button>
+        <button onclick="showMeals('veg')">Vegetarian</button>
+        <button onclick="showMeals('nonveg')">Non-Vegetarian</button>
+    </div>
+
+    <div id="mealContainer" class="cards">
+
+        <div class="card meal veg">
+            <h3>🌅 Breakfast</h3>
+            <p>Poha + Milk + Banana</p>
+            <span>Vegetarian</span>
+        </div>
+
+        <div class="card meal veg">
+            <h3>☀️ Lunch</h3>
+            <p>Dal + Rice + Roti + Salad</p>
+            <span>Vegetarian</span>
+        </div>
+
+        <div class="card meal nonveg">
+            <h3>🌙 Dinner</h3>
+            <p>Roti + Chicken Curry + Salad</p>
+            <span>Non-Vegetarian</span>
+        </div>
+
+        <div class="card meal veg">
+            <h3>🍎 Evening Snack</h3>
+            <p>Fruit + Nuts + Buttermilk</p>
+            <span>Vegetarian</span>
+        </div>
+
+    </div>
+</section>
+
+<!-- RECIPES -->
+<section id="Recipes">
+    <h2>🍳 Healthy Recipes</h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>🥗 Vegetable Salad</h3>
+            <p>Mixed vegetables with lemon and healthy spices.</p>
+            <button onclick="showRecipe('Vegetable Salad')">
+                View Recipe
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>🥣 Healthy Dal</h3>
+            <p>Protein-rich dal with vegetables and Indian spices.</p>
+            <button onclick="showRecipe('Healthy Dal')">
+                View Recipe
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>🍲 Vegetable Khichdi</h3>
+            <p>A simple and nutritious Indian meal.</p>
+            <button onclick="showRecipe('Vegetable Khichdi')">
+                View Recipe
+            </button>
+        </div>
+
+    </div>
+</section>
+
+<!-- HEALTH TIPS -->
+<section id="tips">
+    <h2>💡 Healthy Eating Tips</h2>
+
+    <ul class="tips">
+        <li>Drink enough water throughout the day.</li>
+        <li>Include fruits and vegetables in your meals.</li>
+        <li>Choose whole grains whenever possible.</li>
+        <li>Eat meals at regular times.</li>
+        <li>Limit highly processed and sugary foods.</li>
+    </ul>
+</section>
+
+<!-- PROFILE -->
+<section id="profile">
+    <h2>👤 User Profile</h2>
+
+    <div class="profile-box">
+
+        <p><strong>Name:</strong> <span id="profileName">Priya</span></p>
+        <p><strong>Age:</strong> <span id="profileAge">20</span></p>
+        <p><strong>Food Preference:</strong>
+            <span id="profileFood">Vegetarian</span>
+        </p>
+
+        <button onclick="editProfile()">✏️ Edit Profile</button>
+
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 NutriCare | Nutrition & Health Tracking App</p>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    fetch("navigation.html")
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById("navigation").innerHTML = data;
+        });
+</script>
+
+</body>
+</html>
