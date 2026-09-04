@@ -428,7 +428,7 @@ function loginUser() {
                 email: user.email
             })
         );
-
+        localStorage.setItem("nutrisyncLoggedIn", "true");
 
         /* --------------------------
            SUCCESS
