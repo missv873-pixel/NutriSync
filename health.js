@@ -499,37 +499,43 @@ function formatExerciseTime(totalSeconds) {
 
 function saveActivity() {
 
-    const steps =
-        Number(
-            document.getElementById("steps").value
-        ) || 0;
+    const stepsElement =
+        document.getElementById("steps");
 
+    const workoutElement =
+        document.getElementById("workoutType");
+
+
+    const steps =
+        Number(stepsElement ? stepsElement.value : 0) || 0;
 
     const workoutType =
-        document.getElementById("workoutType").value;
+        workoutElement ? workoutElement.value : "";
 
+
+    /* Make sure a workout is selected */
 
     if (!workoutType) {
 
-        alert(
-            "Please select a workout type."
-        );
+        alert("Please select a workout type.");
 
         return;
 
     }
 
+
+    /* Make sure timer has recorded time */
 
     if (timerSeconds <= 0) {
 
-        alert(
-            "Please start the timer and record some exercise time."
-        );
+        alert("Please start the timer first.");
 
         return;
 
     }
 
+
+    /* Create activity data */
 
     const activity = {
 
@@ -539,20 +545,22 @@ function saveActivity() {
 
         exerciseSeconds: timerSeconds,
 
-        exerciseTime:
-            formatExerciseTime(timerSeconds),
+        exerciseTime: formatExerciseTime(timerSeconds),
 
-        savedAt:
-            new Date().toISOString()
+        savedAt: new Date().toISOString()
 
     };
 
+
+    /* Save activity */
 
     localStorage.setItem(
         "nutrisyncActivity",
         JSON.stringify(activity)
     );
 
+
+    /* Immediately display saved activity */
 
     displayActivity();
 
@@ -563,7 +571,6 @@ function saveActivity() {
 
 }
 
-
 /* ==========================================
    DISPLAY SAVED ACTIVITY
 ========================================== */
@@ -571,9 +578,7 @@ function saveActivity() {
 function displayActivity() {
 
     const savedActivity =
-        localStorage.getItem(
-            "nutrisyncActivity"
-        );
+        localStorage.getItem("nutrisyncActivity");
 
 
     if (!savedActivity) {
@@ -590,21 +595,13 @@ function displayActivity() {
 
 
         const stepsResult =
-            document.getElementById(
-                "stepsResult"
-            );
-
+            document.getElementById("stepsResult");
 
         const exerciseResult =
-            document.getElementById(
-                "exerciseResult"
-            );
-
+            document.getElementById("exerciseResult");
 
         const workoutResult =
-            document.getElementById(
-                "workoutResult"
-            );
+            document.getElementById("workoutResult");
 
 
         if (stepsResult) {
@@ -626,24 +623,20 @@ function displayActivity() {
         if (workoutResult) {
 
             workoutResult.textContent =
-                activity.workoutType ||
-                "Not recorded";
+                activity.workoutType || "Not recorded";
 
         }
 
-    }
-
-    catch (error) {
+    } catch (error) {
 
         console.error(
-            "Activity data error:",
+            "Error loading activity:",
             error
         );
 
     }
 
 }
-
 
 /* ==========================================
    LOAD SAVED ACTIVITY
