@@ -9,8 +9,8 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f7f5;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f8f6;
     color: #222;
     line-height: 1.6;
 }
@@ -20,14 +20,22 @@ body {
 ========================================== */
 
 header {
-    background: #ffffff;
-    padding: 30px 7%;
-    border-bottom: 1px solid #ddd;
+    background: transparent;
+    padding: 0;
+    border: none;
+}
+
+.header-content {
+    width: 86%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 35px 0 10px;
 }
 
 .header-content h1 {
     font-size: 32px;
-    margin-bottom: 5px;
+    font-weight: 700;
+    margin-bottom: 4px;
 }
 
 .header-content p {
@@ -42,7 +50,7 @@ header {
 main {
     width: 86%;
     max-width: 1200px;
-    margin: 30px auto;
+    margin: 20px auto 50px;
 }
 
 section {
@@ -50,28 +58,34 @@ section {
 }
 
 section > h2 {
-    font-size: 24px;
-    margin-bottom: 18px;
+    font-size: 23px;
+    font-weight: 700;
+    margin-bottom: 16px;
 }
 
 /* ==========================================
-   WELCOME CARD
+   WELCOME
 ========================================== */
 
 .welcome-card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
+    background: #ffffff;
+    padding: 25px 28px;
+    border-radius: 14px;
     margin-bottom: 35px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    border: 1px solid #e4ebe7;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
 }
 
 .welcome-card h2 {
+    font-size: 24px;
     margin-bottom: 8px;
 }
 
 .welcome-card p {
     color: #666;
+    font-size: 15px;
 }
 
 /* ==========================================
@@ -80,31 +94,52 @@ section > h2 {
 
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
 }
 
 .summary-card {
-    background: white;
-    padding: 25px 20px;
-    border-radius: 12px;
+    background: #ffffff;
+    min-height: 170px;
+
+    padding: 25px 15px;
+
+    border-radius: 14px;
+    border: 1px solid #e4ebe7;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.09);
 }
 
 .summary-card span {
     display: block;
-    font-size: 30px;
-    margin-bottom: 10px;
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 15px;
 }
 
 .summary-card h3 {
     font-size: 24px;
+    font-weight: 700;
     margin-bottom: 5px;
 }
 
 .summary-card p {
     color: #666;
+    font-size: 15px;
 }
 
 /* ==========================================
@@ -113,26 +148,38 @@ section > h2 {
 
 .meal-summary {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 20px;
 }
 
 .meal-summary > div {
-    background: white;
+    background: #ffffff;
+
+    min-height: 120px;
     padding: 22px;
-    border-radius: 12px;
+
+    border-radius: 14px;
+    border: 1px solid #e4ebe7;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     text-align: center;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
 }
 
 .meal-summary span {
-    display: block;
     color: #666;
-    margin-bottom: 8px;
+    font-size: 15px;
+    margin-bottom: 5px;
 }
 
 .meal-summary strong {
-    font-size: 25px;
+    font-size: 28px;
+    font-weight: 700;
 }
 
 /* ==========================================
@@ -140,18 +187,24 @@ section > h2 {
 ========================================== */
 
 .report-card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+
+    padding: 25px 28px;
+
+    border-radius: 14px;
+    border: 1px solid #e4ebe7;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
 }
 
 .report-card h3 {
-    margin-bottom: 10px;
+    font-size: 20px;
+    margin-bottom: 8px;
 }
 
 .report-card p {
     color: #555;
+    font-size: 15px;
 }
 
 /* ==========================================
@@ -165,26 +218,38 @@ section > h2 {
 }
 
 .history-card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    background: #ffffff;
+
+    padding: 20px 25px;
+
+    border-radius: 14px;
+    border: 1px solid #e4ebe7;
+
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
 }
 
 .history-card h3 {
+    font-size: 18px;
     margin-bottom: 10px;
 }
 
 .history-card p {
-    margin: 3px 0;
     color: #555;
+    margin: 4px 0;
+    font-size: 14px;
 }
 
 .empty-message {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
+    background: #ffffff;
+
+    padding: 22px;
+
+    border-radius: 14px;
+    border: 1px solid #e4ebe7;
+
     color: #777;
+
+    text-align: center;
 }
 
 /* ==========================================
@@ -194,42 +259,104 @@ section > h2 {
 footer {
     text-align: center;
     padding: 25px;
+
     color: #777;
-    margin-top: 40px;
+    font-size: 14px;
+
+    border-top: 1px solid #e1e7e4;
 }
 
 /* ==========================================
-   RESPONSIVE
+   TABLET
 ========================================== */
 
 @media (max-width: 900px) {
 
     .summary-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .meal-summary {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .header-content {
+        width: 90%;
+    }
+
+    main {
+        width: 90%;
+    }
 }
+
+/* ==========================================
+   MOBILE
+========================================== */
 
 @media (max-width: 600px) {
 
+    .header-content {
+        width: 92%;
+        padding: 25px 0 10px;
+    }
+
+    .header-content h1 {
+        font-size: 27px;
+    }
+
+    .header-content p {
+        font-size: 14px;
+    }
+
     main {
         width: 92%;
+        margin-top: 15px;
+    }
+
+    section {
+        margin-bottom: 28px;
+    }
+
+    section > h2 {
+        font-size: 20px;
+    }
+
+    .welcome-card {
+        padding: 20px;
+    }
+
+    .welcome-card h2 {
+        font-size: 20px;
     }
 
     .summary-grid {
         grid-template-columns: 1fr;
+        gap: 15px;
+    }
+
+    .summary-card {
+        min-height: 145px;
     }
 
     .meal-summary {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
     }
 
-    .header-content h1 {
-        font-size: 26px;
+    .meal-summary > div {
+        min-height: 100px;
+        padding: 15px;
     }
 
+    .meal-summary strong {
+        font-size: 24px;
+    }
+
+    .report-card {
+        padding: 20px;
+    }
+
+    .history-card {
+        padding: 18px;
+    }
 }
