@@ -356,6 +356,147 @@ updateWaterTracker();
    DAILY ACTIVITY TRACKER
 ========================================== */
 
+let timerSeconds = 0;
+
+let timerInterval = null;
+
+
+/* ==========================================
+   TIMER DISPLAY
+========================================== */
+
+function updateTimerDisplay() {
+
+    const hours =
+        Math.floor(timerSeconds / 3600);
+
+    const minutes =
+        Math.floor(
+            (timerSeconds % 3600) / 60
+        );
+
+    const seconds =
+        timerSeconds % 60;
+
+
+    const timerDisplay =
+        document.getElementById("timerDisplay");
+
+
+    if (!timerDisplay) return;
+
+
+    timerDisplay.textContent =
+        String(hours).padStart(2, "0") +
+        ":" +
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
+
+}
+
+
+/* ==========================================
+   START TIMER
+========================================== */
+
+function startTimer() {
+
+    if (timerInterval !== null) {
+        return;
+    }
+
+
+    timerInterval =
+        setInterval(function () {
+
+            timerSeconds++;
+
+            updateTimerDisplay();
+
+        }, 1000);
+
+}
+
+
+/* ==========================================
+   PAUSE TIMER
+========================================== */
+
+function pauseTimer() {
+
+    if (timerInterval !== null) {
+
+        clearInterval(timerInterval);
+
+        timerInterval = null;
+
+    }
+
+}
+
+
+/* ==========================================
+   RESET TIMER
+========================================== */
+
+function resetTimer() {
+
+    clearInterval(timerInterval);
+
+    timerInterval = null;
+
+    timerSeconds = 0;
+
+    updateTimerDisplay();
+
+}
+
+
+/* ==========================================
+   FORMAT TIME
+========================================== */
+
+function formatExerciseTime(totalSeconds) {
+
+    const hours =
+        Math.floor(totalSeconds / 3600);
+
+    const minutes =
+        Math.floor(
+            (totalSeconds % 3600) / 60
+        );
+
+    const seconds =
+        totalSeconds % 60;
+
+
+    if (hours > 0) {
+
+        return (
+            String(hours).padStart(2, "0") +
+            ":" +
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0")
+        );
+
+    }
+
+
+    return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0")
+    );
+
+}
+
+
+/* ==========================================
+   SAVE ACTIVITY
+========================================== */
+
 function saveActivity() {
 
     const steps =
@@ -364,24 +505,45 @@ function saveActivity() {
         ) || 0;
 
 
-    const exerciseMinutes =
-        Number(
-            document.getElementById("exerciseMinutes").value
-        ) || 0;
-
-
     const workoutType =
         document.getElementById("workoutType").value;
+
+
+    if (!workoutType) {
+
+        alert(
+            "Please select a workout type."
+        );
+
+        return;
+
+    }
+
+
+    if (timerSeconds <= 0) {
+
+        alert(
+            "Please start the timer and record some exercise time."
+        );
+
+        return;
+
+    }
 
 
     const activity = {
 
         steps: steps,
 
-        exerciseMinutes: exerciseMinutes,
+        workoutType: workoutType,
 
-        workoutType:
-            workoutType || "Not recorded"
+        exerciseSeconds: timerSeconds,
+
+        exerciseTime:
+            formatExerciseTime(timerSeconds),
+
+        savedAt:
+            new Date().toISOString()
 
     };
 
@@ -402,6 +564,10 @@ function saveActivity() {
 }
 
 
+/* ==========================================
+   DISPLAY SAVED ACTIVITY
+========================================== */
+
 function displayActivity() {
 
     const savedActivity =
@@ -411,183 +577,78 @@ function displayActivity() {
 
 
     if (!savedActivity) {
+
         return;
-    }
-
-
-    const activity =
-        JSON.parse(savedActivity);
-
-
-    const stepsResult =
-        document.getElementById(
-            "stepsResult"
-        );
-
-
-    const exerciseResult =
-        document.getElementById(
-            "exerciseResult"
-        );
-
-
-    const workoutResult =
-        document.getElementById(
-            "workoutResult"
-        );
-
-
-    if (stepsResult) {
-
-        stepsResult.textContent =
-            activity.steps || 0;
 
     }
 
 
-    if (exerciseResult) {
+    try {
 
-        exerciseResult.textContent =
-            activity.exerciseMinutes || 0;
+        const activity =
+            JSON.parse(savedActivity);
+
+
+        const stepsResult =
+            document.getElementById(
+                "stepsResult"
+            );
+
+
+        const exerciseResult =
+            document.getElementById(
+                "exerciseResult"
+            );
+
+
+        const workoutResult =
+            document.getElementById(
+                "workoutResult"
+            );
+
+
+        if (stepsResult) {
+
+            stepsResult.textContent =
+                activity.steps || 0;
+
+        }
+
+
+        if (exerciseResult) {
+
+            exerciseResult.textContent =
+                activity.exerciseTime || "00:00";
+
+        }
+
+
+        if (workoutResult) {
+
+            workoutResult.textContent =
+                activity.workoutType ||
+                "Not recorded";
+
+        }
 
     }
 
+    catch (error) {
 
-    if (workoutResult) {
-
-        workoutResult.textContent =
-            activity.workoutType ||
-            "Not recorded";
+        console.error(
+            "Activity data error:",
+            error
+        );
 
     }
 
 }
-
-
-displayActivity();
 
 
 /* ==========================================
-   EXERCISE TIMER
+   LOAD SAVED ACTIVITY
 ========================================== */
 
-let timerSeconds = 0;
+displayActivity();
 
-let timerInterval = null;
-
-
-function startTimer() {
-
-    if (timerInterval !== null) {
-        return;
-    }
-
-
-    timerInterval =
-        setInterval(
-            function() {
-
-                timerSeconds++;
-
-                updateTimerDisplay();
-
-            },
-            1000
-        );
-
-}
-
-
-function pauseTimer() {
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-
-    updateExerciseMinutes();
-
-}
-
-
-function resetTimer() {
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-
-    timerSeconds = 0;
-
-
-    updateTimerDisplay();
-
-
-    const exerciseInput =
-        document.getElementById(
-            "exerciseMinutes"
-        );
-
-
-    if (exerciseInput) {
-
-        exerciseInput.value = 0;
-
-    }
-
-}
-
-
-function updateTimerDisplay() {
-
-    const minutes =
-        Math.floor(
-            timerSeconds / 60
-        );
-
-
-    const seconds =
-        timerSeconds % 60;
-
-
-    const timerDisplay =
-        document.getElementById(
-            "timerDisplay"
-        );
-
-
-    if (timerDisplay) {
-
-        timerDisplay.textContent =
-            String(minutes).padStart(2, "0") +
-            ":" +
-            String(seconds).padStart(2, "0");
-
-    }
-
-
-    updateExerciseMinutes();
-
-}
-
-
-function updateExerciseMinutes() {
-
-    const minutes =
-        Math.floor(
-            timerSeconds / 60
-        );
-
-
-    const exerciseInput =
-        document.getElementById(
-            "exerciseMinutes"
-        );
-
-
-    if (exerciseInput) {
-
-        exerciseInput.value =
-            minutes;
-
-    }
-
-}
+updateTimerDisplay();
