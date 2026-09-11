@@ -488,3 +488,46 @@ footer {
     }
 
 }
+/* Quick Access */
+
+.quick-access {
+    margin-top: 30px;
+}
+
+.quick-access h2 {
+    margin-bottom: 20px;
+}
+
+.quick-access-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.quick-access-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quick-access-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.12);
+}
+
+.quick-icon {
+    font-size: 35px;
+}
+
+.quick-access-card h3 {
+    margin: 12px 0 8px;
+}
+
+.quick-access-card p {
+    margin: 0;
+}
