@@ -15,7 +15,6 @@ function showLogin() {
     document.getElementById("registerForm").style.display =
         "none";
 
-
     clearMessages();
 }
 
@@ -31,7 +30,6 @@ function showRegister() {
 
     document.getElementById("registerForm").style.display =
         "block";
-
 
     clearMessages();
 }
@@ -49,11 +47,9 @@ function clearMessages() {
     const registerMessage =
         document.getElementById("registerMessage");
 
-
     loginMessage.textContent = "";
 
     registerMessage.textContent = "";
-
 
     loginMessage.className =
         "message";
@@ -319,8 +315,9 @@ function loginUser() {
             .getElementById("loginPassword")
             .value;
 
-            const rememberMe=
-            document
+
+    const rememberMe =
+        document
             .getElementById("rememberMe")
             .checked;
 
@@ -409,17 +406,27 @@ function loginUser() {
             "nutrisyncLoggedIn",
             "true"
         );
-        if(rememberMe){
+
+
+        if (rememberMe) {
+
             localStorage.setItem(
-            "nutrisyncRememberMe",
-            "true"
+                "nutrisyncRememberMe",
+                "true"
             );
-        }else{
+
+        } else {
+
             localStorage.removeItem(
-            "nutrisyncRememberMe",
+                "nutrisyncRememberMe"
             );
+
         }
 
+
+        /* --------------------------
+           SAVE CURRENT USER
+        -------------------------- */
 
         localStorage.setItem(
             "nutrisyncCurrentUser",
@@ -428,7 +435,7 @@ function loginUser() {
                 email: user.email
             })
         );
-        localStorage.setItem("nutrisyncLoggedIn", "true");
+
 
         /* --------------------------
            SUCCESS
@@ -442,14 +449,14 @@ function loginUser() {
 
 
         /* --------------------------
-           OPEN MAIN APP
+           OPEN DASHBOARD
         -------------------------- */
 
         setTimeout(
             function () {
 
                 window.location.href =
-                    "index.html";
+                    "dashboard.html";
 
             },
             700
@@ -501,10 +508,8 @@ function checkAuthentication() {
 
 
     /*
-
        If the user is already logged in,
-       don't force them to login again.
-
+       open the Dashboard directly.
     */
 
     if (loggedIn === "true") {
