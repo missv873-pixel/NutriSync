@@ -1,11 +1,10 @@
 /* ==========================================
    NUTRISYNC - DASHBOARD
-   Reads the latest data from all sections
-========================================== */
+   ========================================== */
 
 
 /* ==========================================
-   AUTHENTICATION CHECK
+   AUTHENTICATION
 ========================================== */
 
 if (localStorage.getItem("nutrisyncLoggedIn") !== "true") {
@@ -14,58 +13,48 @@ if (localStorage.getItem("nutrisyncLoggedIn") !== "true") {
 
 
 /* ==========================================
-   GET CURRENT USER
+   NUTRITION DATA
+   script.js already creates:
+   currentUser
+   allFoods
+   dailyFoods
 ========================================== */
 
-const currentUserData = JSON.parse(
-    localStorage.getItem("nutrisyncCurrentUser") || "null"
-);
+function getDashboardFoods() {
 
-const currentUser = currentUserData
-    ? currentUserData.email
-    : null;
-
-
-/* ==========================================
-   GET FOOD DATA
-========================================== */
-
-function getAllFoods() {
-
-    if (!currentUser) {
+    if (typeof allFoods === "undefined") {
         return [];
     }
 
-    return JSON.parse(
-        localStorage.getItem("allFoods_" + currentUser) || "[]"
-    );
+    return allFoods;
 }
 
 
-/* ==========================================
-   GET TODAY'S FOOD
-========================================== */
+function getTodayDashboardFoods() {
 
-function getTodayFoods() {
+    if (typeof dailyFoods !== "undefined") {
+        return dailyFoods;
+    }
 
-    const today = new Date()
-        .toISOString()
-        .split("T")[0];
+    const today =
+        new Date().toISOString().split("T")[0];
 
-    return getAllFoods().filter(function(food) {
+    return getDashboardFoods().filter(function (food) {
 
         return food.date === today;
 
     });
-
 }
 
 
 /* ==========================================
-   CALCULATE NUTRITION TOTALS
+   CALCULATE NUTRITION
 ========================================== */
 
-function calculateTotals(dailyFoods) {
+function updateDashboardNutrition() {
+
+    const foods =
+        getTodayDashboardFoods();
 
     let calories = 0;
     let protein = 0;
@@ -73,38 +62,14 @@ function calculateTotals(dailyFoods) {
     let fat = 0;
 
 
-    dailyFoods.forEach(function(food) {
+    foods.forEach(function (food) {
 
         calories += Number(food.calories) || 0;
-
         protein += Number(food.protein) || 0;
-
         carbs += Number(food.carbs) || 0;
-
         fat += Number(food.fat) || 0;
 
     });
-
-
-    return {
-        calories,
-        protein,
-        carbs,
-        fat
-    };
-
-}
-
-
-/* ==========================================
-   DISPLAY NUTRITION
-========================================== */
-
-function displayNutrition() {
-
-    const dailyFoods = getTodayFoods();
-
-    const totals = calculateTotals(dailyFoods);
 
 
     const caloriesElement =
@@ -123,7 +88,7 @@ function displayNutrition() {
     if (caloriesElement) {
 
         caloriesElement.textContent =
-            Math.round(totals.calories) + " kcal";
+            Math.round(calories) + " kcal";
 
     }
 
@@ -131,7 +96,7 @@ function displayNutrition() {
     if (proteinElement) {
 
         proteinElement.textContent =
-            totals.protein.toFixed(1) + " g";
+            protein.toFixed(1) + " g";
 
     }
 
@@ -139,7 +104,7 @@ function displayNutrition() {
     if (carbsElement) {
 
         carbsElement.textContent =
-            totals.carbs.toFixed(1) + " g";
+            carbs.toFixed(1) + " g";
 
     }
 
@@ -147,7 +112,7 @@ function displayNutrition() {
     if (fatElement) {
 
         fatElement.textContent =
-            totals.fat.toFixed(1) + " g";
+            fat.toFixed(1) + " g";
 
     }
 
@@ -155,15 +120,16 @@ function displayNutrition() {
 
 
 /* ==========================================
-   DISPLAY MEAL COUNTS
+   TODAY'S MEALS
 ========================================== */
 
-function displayMealCounts() {
+function updateDashboardMeals() {
 
-    const dailyFoods = getTodayFoods();
+    const foods =
+        getTodayDashboardFoods();
 
 
-    const meals = {
+    const mealCounts = {
 
         breakfast: 0,
 
@@ -176,7 +142,7 @@ function displayMealCounts() {
     };
 
 
-    dailyFoods.forEach(function(food) {
+    foods.forEach(function (food) {
 
         const meal =
             String(food.meal || "")
@@ -184,9 +150,12 @@ function displayMealCounts() {
                 .trim();
 
 
-        if (meals[meal] !== undefined) {
+        if (
+            Object.prototype.hasOwnProperty
+                .call(mealCounts, meal)
+        ) {
 
-            meals[meal]++;
+            mealCounts[meal]++;
 
         }
 
@@ -207,29 +176,33 @@ function displayMealCounts() {
 
 
     if (breakfast) {
-        breakfast.textContent = meals.breakfast;
+        breakfast.textContent =
+            mealCounts.breakfast;
     }
 
     if (lunch) {
-        lunch.textContent = meals.lunch;
+        lunch.textContent =
+            mealCounts.lunch;
     }
 
     if (snack) {
-        snack.textContent = meals.snack;
+        snack.textContent =
+            mealCounts.snack;
     }
 
     if (dinner) {
-        dinner.textContent = meals.dinner;
+        dinner.textContent =
+            mealCounts.dinner;
     }
 
 }
 
 
 /* ==========================================
-   GENERATE NUTRITION REPORT
+   NUTRITION REPORT
 ========================================== */
 
-function generateReport() {
+function updateDashboardReport() {
 
     const report =
         document.getElementById("reportText");
@@ -237,44 +210,57 @@ function generateReport() {
     if (!report) return;
 
 
-    const dailyFoods = getTodayFoods();
+    const foods =
+        getTodayDashboardFoods();
 
 
-    if (dailyFoods.length === 0) {
+    if (foods.length === 0) {
 
         report.textContent =
-            "No food has been recorded today. Start recording your meals to see your nutrition report.";
+            "No food has been recorded today.";
 
         return;
 
     }
 
 
-    const totals =
-        calculateTotals(dailyFoods);
+    let calories = 0;
+    let protein = 0;
+    let carbs = 0;
+    let fat = 0;
+
+
+    foods.forEach(function (food) {
+
+        calories += Number(food.calories) || 0;
+        protein += Number(food.protein) || 0;
+        carbs += Number(food.carbs) || 0;
+        fat += Number(food.fat) || 0;
+
+    });
 
 
     report.textContent =
         "Today you have recorded " +
-        dailyFoods.length +
+        foods.length +
         " food item(s), providing approximately " +
-        Math.round(totals.calories) +
+        Math.round(calories) +
         " kcal, " +
-        totals.protein.toFixed(1) +
+        protein.toFixed(1) +
         " g protein, " +
-        totals.carbs.toFixed(1) +
+        carbs.toFixed(1) +
         " g carbs and " +
-        totals.fat.toFixed(1) +
+        fat.toFixed(1) +
         " g fat.";
 
 }
 
 
 /* ==========================================
-   DISPLAY NUTRITION HISTORY
+   NUTRITION HISTORY
 ========================================== */
 
-function displayHistory() {
+function updateDashboardHistory() {
 
     const historyList =
         document.getElementById("historyList");
@@ -282,11 +268,11 @@ function displayHistory() {
     if (!historyList) return;
 
 
-    const allFoods =
-        getAllFoods();
+    const foods =
+        getDashboardFoods();
 
 
-    if (allFoods.length === 0) {
+    if (foods.length === 0) {
 
         historyList.innerHTML = `
             <p class="empty-message">
@@ -302,14 +288,13 @@ function displayHistory() {
     const groupedFoods = {};
 
 
-    allFoods.forEach(function(food) {
+    foods.forEach(function (food) {
 
         if (!groupedFoods[food.date]) {
 
             groupedFoods[food.date] = [];
 
         }
-
 
         groupedFoods[food.date].push(food);
 
@@ -322,7 +307,7 @@ function displayHistory() {
     Object.keys(groupedFoods)
         .sort()
         .reverse()
-        .forEach(function(date) {
+        .forEach(function (date) {
 
             let calories = 0;
             let protein = 0;
@@ -330,19 +315,12 @@ function displayHistory() {
             let fat = 0;
 
 
-            groupedFoods[date].forEach(function(food) {
+            groupedFoods[date].forEach(function (food) {
 
-                calories +=
-                    Number(food.calories) || 0;
-
-                protein +=
-                    Number(food.protein) || 0;
-
-                carbs +=
-                    Number(food.carbs) || 0;
-
-                fat +=
-                    Number(food.fat) || 0;
+                calories += Number(food.calories) || 0;
+                protein += Number(food.protein) || 0;
+                carbs += Number(food.carbs) || 0;
+                fat += Number(food.fat) || 0;
 
             });
 
@@ -351,22 +329,22 @@ function displayHistory() {
 
                 <div class="history-card">
 
-                    <h3>${date}</h3>
+                    <h3>📅 ${date}</h3>
 
                     <p>
-                        ${Math.round(calories)} kcal
+                        🔥 ${Math.round(calories)} kcal
                     </p>
 
                     <p>
-                        ${protein.toFixed(1)} g Protein
+                        💪 ${protein.toFixed(1)} g Protein
                     </p>
 
                     <p>
-                        ${carbs.toFixed(1)} g Carbs
+                        🍚 ${carbs.toFixed(1)} g Carbs
                     </p>
 
                     <p>
-                        ${fat.toFixed(1)} g Fat
+                        🥑 ${fat.toFixed(1)} g Fat
                     </p>
 
                 </div>
@@ -379,20 +357,22 @@ function displayHistory() {
 
 
 /* ==========================================
-   DISPLAY HEALTH DATA
+   HEALTH DATA
 ========================================== */
 
-function displayHealthData() {
-
-    const savedHealth =
-        localStorage.getItem("nutrisyncHealth");
-
+function updateDashboardHealth() {
 
     const bmiElement =
         document.getElementById("dashboardBMI");
 
     const statusElement =
-        document.getElementById("dashboardHealthStatus");
+        document.getElementById(
+            "dashboardHealthStatus"
+        );
+
+
+    const savedHealth =
+        localStorage.getItem("nutrisyncHealth");
 
 
     if (!savedHealth) {
@@ -402,7 +382,8 @@ function displayHealthData() {
         }
 
         if (statusElement) {
-            statusElement.textContent = "Not assessed";
+            statusElement.textContent =
+                "Not assessed";
         }
 
         return;
@@ -410,22 +391,33 @@ function displayHealthData() {
     }
 
 
-    const health =
-        JSON.parse(savedHealth);
+    try {
+
+        const health =
+            JSON.parse(savedHealth);
 
 
-    if (bmiElement) {
+        if (bmiElement) {
 
-        bmiElement.textContent =
-            health.bmi || "--";
+            bmiElement.textContent =
+                health.bmi || "--";
 
-    }
+        }
 
 
-    if (statusElement) {
+        if (statusElement) {
 
-        statusElement.textContent =
-            health.status || "Not assessed";
+            statusElement.textContent =
+                health.status || "Not assessed";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Health data error:",
+            error
+        );
 
     }
 
@@ -433,19 +425,23 @@ function displayHealthData() {
 
 
 /* ==========================================
-   DISPLAY WATER
+   WATER
 ========================================== */
 
-function displayWaterData() {
+function updateDashboardWater() {
 
     const waterElement =
-        document.getElementById("dashboardWater");
+        document.getElementById(
+            "dashboardWater"
+        );
 
     if (!waterElement) return;
 
 
     const water =
-        Number(localStorage.getItem("waterCount")) || 0;
+        Number(
+            localStorage.getItem("waterCount")
+        ) || 0;
 
 
     waterElement.textContent =
@@ -455,20 +451,26 @@ function displayWaterData() {
 
 
 /* ==========================================
-   DISPLAY ACTIVITY
+   ACTIVITY
 ========================================== */
 
-function displayActivityData() {
+function updateDashboardActivity() {
 
     const stepsElement =
-        document.getElementById("dashboardSteps");
+        document.getElementById(
+            "dashboardSteps"
+        );
 
     const exerciseElement =
-        document.getElementById("dashboardExercise");
+        document.getElementById(
+            "dashboardExercise"
+        );
 
 
     const savedActivity =
-        localStorage.getItem("nutrisyncActivity");
+        localStorage.getItem(
+            "nutrisyncActivity"
+        );
 
 
     if (!savedActivity) {
@@ -478,7 +480,8 @@ function displayActivityData() {
         }
 
         if (exerciseElement) {
-            exerciseElement.textContent = "0 min";
+            exerciseElement.textContent =
+                "0 min";
         }
 
         return;
@@ -486,22 +489,34 @@ function displayActivityData() {
     }
 
 
-    const activity =
-        JSON.parse(savedActivity);
+    try {
+
+        const activity =
+            JSON.parse(savedActivity);
 
 
-    if (stepsElement) {
+        if (stepsElement) {
 
-        stepsElement.textContent =
-            activity.steps || 0;
+            stepsElement.textContent =
+                activity.steps || 0;
 
-    }
+        }
 
 
-    if (exerciseElement) {
+        if (exerciseElement) {
 
-        exerciseElement.textContent =
-            (activity.exerciseMinutes || 0) + " min";
+            exerciseElement.textContent =
+                (activity.exerciseMinutes || 0) +
+                " min";
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Activity data error:",
+            error
+        );
 
     }
 
@@ -509,127 +524,165 @@ function displayActivityData() {
 
 
 /* ==========================================
-   DISPLAY MEAL PLAN
+   MEAL PLAN
 ========================================== */
 
-function displayMealPlanData() {
+function updateDashboardMealPlan() {
 
-    const mealPlanElement =
-        document.getElementById("dashboardMealPlan");
+    const container =
+        document.getElementById(
+            "dashboardMealPlan"
+        );
 
-
-    if (!mealPlanElement) return;
+    if (!container) return;
 
 
     const savedPlan =
-        localStorage.getItem("nutrisyncMealPlan");
+        localStorage.getItem(
+            "nutrisyncMealPlan"
+        );
 
 
     if (!savedPlan) {
 
-        mealPlanElement.textContent =
-            "No meal plan created yet.";
+        container.innerHTML =
+            "<p>No meal plan created yet.</p>";
 
         return;
 
     }
 
 
-    const data =
-        JSON.parse(savedPlan);
+    try {
+
+        const data =
+            JSON.parse(savedPlan);
 
 
-    if (!data.plan) {
+        if (!data.plan) {
 
-        mealPlanElement.textContent =
-            "No meal plan created yet.";
+            container.innerHTML =
+                "<p>No meal plan created yet.</p>";
 
-        return;
+            return;
+
+        }
+
+
+        const plan =
+            data.plan;
+
+
+        container.innerHTML = `
+
+            <div class="dashboard-meal-item">
+
+                <strong>Breakfast</strong>
+
+                <span>
+                    ${plan.breakfast}
+                </span>
+
+            </div>
+
+
+            <div class="dashboard-meal-item">
+
+                <strong>Lunch</strong>
+
+                <span>
+                    ${plan.lunch}
+                </span>
+
+            </div>
+
+
+            <div class="dashboard-meal-item">
+
+                <strong>Snack</strong>
+
+                <span>
+                    ${plan.snack}
+                </span>
+
+            </div>
+
+
+            <div class="dashboard-meal-item">
+
+                <strong>Dinner</strong>
+
+                <span>
+                    ${plan.dinner}
+                </span>
+
+            </div>
+
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Meal plan data error:",
+            error
+        );
+
+        container.innerHTML =
+            "<p>No meal plan available.</p>";
 
     }
-
-
-    const plan =
-        data.plan;
-
-
-    mealPlanElement.innerHTML = `
-
-        <div class="dashboard-meal-item">
-            <strong>Breakfast:</strong>
-            <span>${plan.breakfast}</span>
-        </div>
-
-        <div class="dashboard-meal-item">
-            <strong>Lunch:</strong>
-            <span>${plan.lunch}</span>
-        </div>
-
-        <div class="dashboard-meal-item">
-            <strong>Snack:</strong>
-            <span>${plan.snack}</span>
-        </div>
-
-        <div class="dashboard-meal-item">
-            <strong>Dinner:</strong>
-            <span>${plan.dinner}</span>
-        </div>
-
-    `;
 
 }
 
 
 /* ==========================================
-   REFRESH DASHBOARD
+   REFRESH EVERYTHING
 ========================================== */
 
 function refreshDashboard() {
 
-    displayNutrition();
+    updateDashboardNutrition();
 
-    displayMealCounts();
+    updateDashboardMeals();
 
-    generateReport();
+    updateDashboardReport();
 
-    displayHistory();
+    updateDashboardHistory();
 
-    displayHealthData();
+    updateDashboardHealth();
 
-    displayWaterData();
+    updateDashboardWater();
 
-    displayActivityData();
+    updateDashboardActivity();
 
-    displayMealPlanData();
+    updateDashboardMealPlan();
 
 }
 
 
 /* ==========================================
-   INITIALIZE
+   PAGE LOAD
 ========================================== */
 
 document.addEventListener(
     "DOMContentLoaded",
-    refreshDashboard
+    function () {
+
+        refreshDashboard();
+
+    }
 );
 
 
 /* ==========================================
-   REFRESH WHEN RETURNING TO DASHBOARD
+   WHEN RETURNING TO DASHBOARD
 ========================================== */
 
 window.addEventListener(
     "pageshow",
-    refreshDashboard
-);
+    function () {
 
+        refreshDashboard();
 
-/* ==========================================
-   REFRESH WHEN LOCAL STORAGE CHANGES
-========================================== */
-
-window.addEventListener(
-    "storage",
-    refreshDashboard
+    }
 );
