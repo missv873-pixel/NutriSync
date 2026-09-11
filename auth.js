@@ -510,7 +510,7 @@ function checkAuthentication() {
     if (loggedIn === "true") {
 
         window.location.href =
-            "index.html";
+            "dashboard.html";
     }
 }
 
