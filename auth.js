@@ -538,9 +538,12 @@ document
     );
 
 
-document
-    .getElementById("registerFormElement")
-    .addEventListener(
+const registerFormElement =
+    document.getElementById("registerFormElement");
+
+if (registerFormElement) {
+
+    registerFormElement.addEventListener(
         "submit",
         function (event) {
 
@@ -550,6 +553,8 @@ document
 
         }
     );
+
+}
 
 
 /* ==========================================
