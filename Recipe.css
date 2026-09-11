@@ -1,0 +1,156 @@
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f8f5;
+    color: #333;
+}
+
+header {
+    background: #2e7d32;
+    color: white;
+    padding-bottom: 25px;
+}
+
+.page-title {
+    text-align: center;
+    padding: 25px 20px 5px;
+}
+
+.page-title h1 { margin: 0 0 8px; font-size: 30px; }
+.page-title p { margin: 0; opacity: .9; }
+
+.meal-plan-page {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+section {
+    padding: 35px 7%;
+}
+
+section h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #2e7d32;
+}
+
+.hero {
+    text-align: center;
+    background: #dcedc8;
+    border-radius: 0 0 18px 18px;
+}
+
+.hero h2 { font-size: 30px; margin-bottom: 10px; }
+.hero p { margin-bottom: 25px; }
+
+.planner-controls {
+    max-width: 700px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    text-align: left;
+}
+
+.planner-controls label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.planner-controls select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cfd8cf;
+    border-radius: 8px;
+    background: white;
+}
+
+.planner-controls button {
+    grid-column: 1 / -1;
+    width: 100%;
+}
+
+button {
+    background: #388e3c;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover { background: #1b5e20; }
+
+.meal-plan-grid, .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.meal-card, .card {
+    background: white;
+    padding: 22px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.1);
+}
+
+.meal-card h3, .card h3 {
+    color: #388e3c;
+    margin-top: 0;
+}
+
+.meal-card p, .card p {
+    line-height: 1.5;
+}
+
+.empty-plan {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #777;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+}
+
+.tips {
+    max-width: 700px;
+    margin: auto;
+    padding-left: 0;
+    list-style: none;
+}
+
+.tips li {
+    background: white;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+}
+
+.profile-box {
+    background: white;
+    max-width: 450px;
+    margin: auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.1);
+}
+
+.profile-box p { margin: 15px 0; }
+
+footer {
+    text-align: center;
+    background: #2e7d32;
+    color: white;
+    padding: 20px;
+}
+
+@media (max-width: 700px) {
+    .planner-controls { grid-template-columns: 1fr; }
+    .planner-controls button { grid-column: auto; }
+}

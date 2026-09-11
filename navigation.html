@@ -1,0 +1,26 @@
+<nav class="navbar">
+    <div class="nav-logo">NutriSync</div>
+
+    <div class="nav-actions">
+        <button class="hamburger" id="menuButton" type="button" aria-label="Open menu" aria-expanded="false" onclick="toggleNavMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <button onclick="logoutUser()" class="logout-link" data-i18n="navLogout">Logout</button>
+    </div>
+
+    <div class="nav-links" id="navMenu">
+        <a href="dashboard.html" data-i18n="navDashboard">Dashboard</a>
+        <a href="index.html" data-i18n="navNutrition">Nutrition</a>
+        <a href="Recipe.html" data-i18n="navMealPlan">Meal Plan</a>
+        <a href="health.html" data-i18n="navHealth">Health</a>
+
+        <select id="languageSelect" aria-label="Language" onchange="changeLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="hi">हिन्दी</option>
+            <option value="mr">मराठी</option>
+        </select>
+    </div>
+</nav>

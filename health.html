@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>NutriSync - Health Assessment</title>
+
+    <link
+        rel="stylesheet"
+        href="health.css"
+    >
+    <link
+    rel="stylesheet"
+    href="navigation.css"
+>
+
+</head>
+
+<body>
+
+    <!-- Header -->
+
+    <header>
+
+    <!-- Navigation -->
+    <div id="navigation"></div>
+
+
+    <!-- Page Title -->
+    <div class="header-title">
+
+        <h1 data-i18n="healthTitle">Health Assessment</h1>
+
+        <p data-i18n="healthSubtitle">
+            Understand your health using your height and weight.
+        </p>
+
+    </div>
+
+</header>
+
+
+    <main>
+
+
+        <!-- Health Input -->
+
+        <section class="health-card">
+
+            <h2 data-i18n="enterDetails">Enter Your Details</h2>
+
+            <label for="height" data-i18n="heightLabel">
+                Height (cm)
+            </label>
+
+            <input
+                type="number"
+                id="height"
+                placeholder="Enter your height"
+                min="1"
+            >
+
+
+            <label for="weight" data-i18n="weightLabel">
+                Weight (kg)
+            </label>
+
+            <input
+                type="number"
+                id="weight"
+                placeholder="Enter your weight"
+                min="1"
+            >
+
+
+            <button onclick="calculateBMI()" data-i18n="calculateBMI">
+                Calculate BMI
+            </button>
+
+        </section>
+
+
+
+        <!-- Result -->
+
+        <section
+            class="result-card"
+            id="resultCard"
+        >
+
+            <h2 data-i18n="healthResult">Your Health Result</h2>
+
+
+            <div class="result-item">
+
+                <span data-i18n="bmiLabel">BMI</span>
+
+                <strong id="bmiResult">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="result-item">
+
+                <span data-i18n="healthStatusLabel">Health Status</span>
+
+                <strong id="healthStatus">
+                    --
+                </strong>
+
+            </div>
+
+
+            <div class="recommendation">
+
+                <h3 data-i18n="recommendation">Recommendation</h3>
+
+                <p id="recommendationText" data-i18n="bmiPrompt">
+                    Enter your height and weight to get a recommendation.
+                </p>
+
+            </div>
+
+        </section>
+
+<!-- WATER TRACKER -->
+
+<section class="water-card">
+
+    <h2 data-i18n="waterTitle">💧 Daily Water Intake</h2>
+
+    <p class="water-goal" data-i18n="waterGoal">
+        Daily Goal: 8 glasses 💧
+    </p>
+
+    <div class="water-counter">
+
+        <button
+            type="button"
+            onclick="removeWater()"
+            class="water-btn"
+        >
+            −
+        </button>
+
+        <div class="water-count">
+            <strong id="waterCount">0</strong>
+            <span data-i18n="waterGlasses">/ 8 glasses</span>
+        </div>
+
+        <button
+            type="button"
+            onclick="addWater()"
+            class="water-btn"
+        >
+            +
+        </button>
+
+    </div>
+
+    <div class="water-progress">
+
+        <div
+            id="waterProgress"
+            class="water-progress-bar"
+        ></div>
+
+    </div>
+
+    <p
+        id="waterMessage"
+        class="water-message"
+    >
+        Start tracking your water intake! 💧
+    </p>
+
+</section>
+<!-- DAILY ACTIVITY TRACKER -->
+
+<section class="activity-card">
+
+    <h2 data-i18n="activityTitle">🏃 Daily Activity</h2>
+
+    <p data-i18n="activitySubtitle">Track your activity for today.</p>
+
+    <label for="steps" data-i18n="stepsLabel">
+        🚶 Steps
+    </label>
+
+    <input
+        type="number"
+        id="steps"
+        placeholder="Enter steps"
+        min="0"
+    >
+
+    <label for="exerciseMinutes" data-i18n="exerciseMinutesLabel">
+        🏃 Exercise Minutes
+    </label>
+
+    <input
+        type="number"
+        id="exerciseMinutes"
+        placeholder="Enter exercise minutes"
+        min="0"
+    >
+
+    <label for="workoutType" data-i18n="workoutTypeLabel">
+        🏋️ Workout Type
+    </label>
+
+    <select id="workoutType">
+
+        <option value="" data-i18n="workoutPlaceholder">
+            -- Select Workout --
+        </option>
+
+        <option value="Walking">Walking</option>
+        <option value="Running">Running</option>
+        <option value="Cycling">Cycling</option>
+        <option value="Yoga">Yoga</option>
+        <option value="Gym">Gym</option>
+        <option value="Other">Other</option>
+
+    </select>
+
+    <button
+        type="button"
+        onclick="saveActivity()" data-i18n="saveActivity"
+    >
+        Save Activity
+    </button>
+
+    <div class="activity-summary">
+
+        <h3 data-i18n="activitySummary">Today's Activity</h3>
+
+        <p data-i18n="stepsResultLabel">
+            Steps:
+            <strong id="stepsResult">0</strong>
+        </p>
+
+        <p data-i18n="exerciseResultLabel">
+            Exercise:
+            <strong id="exerciseResult">0</strong> minutes
+        </p>
+
+        <p data-i18n="workoutResultLabel">
+            Workout:
+            <strong id="workoutResult">Not recorded</strong>
+        </p>
+
+    </div>
+<!-- EXERCISE TIMER -->
+
+<div class="exercise-timer">
+
+    <h3 data-i18n="exerciseTimer">⏱️ Exercise Timer</h3>
+
+    <div id="timerDisplay">
+        00:00
+    </div>
+
+    <div class="timer-buttons">
+
+        <button
+            type="button"
+            onclick="startTimer()"
+        >
+            <span data-i18n="start">▶ Start</span>
+        </button>
+
+        <button
+            type="button"
+            onclick="pauseTimer()"
+        >
+            <span data-i18n="pause">⏸ Pause</span>
+        </button>
+
+        <button
+            type="button"
+            onclick="resetTimer()"
+        >
+            <span data-i18n="reset">🔄 Reset</span>
+        </button>
+
+    </div>
+
+</div>
+</section>
+    </main>
+
+
+    <footer>
+
+        <p>© 2026 NutriSync</p>
+
+    </footer>
+
+
+    <script src="health.js"></script>
+    <script src="language.js"></script>
+    <script src="navigation.js"></script>
+
+</body>
+
+</html>

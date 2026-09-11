@@ -1,0 +1,339 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>NutriSync</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="navigation.css">
+</head>
+
+<body>
+
+
+   
+<header>
+
+    <!-- Shared Navigation -->
+    <div id="navigation"></div>
+
+    <!-- Page Title -->
+    <div class="header-title">
+
+        <h1>NutriSync</h1>
+
+        <p>
+            Your Daily Nutrition Companion
+        </p>
+
+    </div>
+
+</header>
+
+
+    <!-- Main Container -->
+    <main>
+
+        <!-- Welcome Section -->
+        <section class="welcome">
+            <h2 id="welcomeTitle" data-i18n="welcomeTitle">Greetings 👋</h2>
+            <p id="welcomeText" data-i18n="welcomeText">Track your nutrition and build healthier eating habits.</p>
+        </section>
+
+
+        <!-- Daily Nutrition -->
+        <section class="nutrition-card">
+
+            <h2 id="nutritionTitle" data-i18n="nutritionTitle">Today's Nutrition</h2>
+
+            <div class="nutrition-summary">
+
+                <div class="nutrition-item">
+                    <span>🔥</span>
+                    <h3 id="totalCalories">0</h3>
+                    <p id="caloriesLabel" data-i18n="caloriesLabel">Calories</p>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>💪</span>
+                    <h3 id="totalProtein">0 g</h3>
+                    <p id="proteinLabel" data-i18n="proteinLabel">Protein</p>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>🍚</span>
+                    <h3 id="totalCarbs">0 g</h3>
+                    <p id="carbsLabel" data-i18n="carbsLabel">Carbs</p>
+                </div>
+
+                <div class="nutrition-item">
+                    <span>🥑</span>
+                    <h3 id="totalFat">0 g</h3>
+                    <p id="fatLabel" data-i18n="fatLabel">Fat</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- Add Food -->
+         <!-- Add New Food -->
+<div class="custom-food-option">
+
+    <p data-i18n="customFoodPrompt">Can't find your food?</p>
+
+    <button type="button" onclick="showCustomFoodForm()" data-i18n="addNewFood">
+        + Add New Food
+    </button>
+
+</div>
+
+
+
+
+
+<!-- Custom Food Form -->
+
+<div id="customFoodForm" class="custom-food-form" style="display: none;">
+
+    <h3 data-i18n="customFoodTitle">Add Your Own Food</h3>
+
+    <label for="customFoodName" data-i18n="customFoodNameLabel">
+        Food Name
+    </label>
+
+    <input
+        type="text"
+        id="customFoodName"
+        placeholder="Example: Chicken Biryani" data-i18n-placeholder="customFoodPlaceholder"
+    >
+
+
+    <label for="customCalories" data-i18n="caloriesPer100">
+        Calories per 100 g
+    </label>
+
+    <input
+        type="number"
+        id="customCalories"
+        placeholder="Example: 195" data-i18n-placeholder="caloriesPlaceholder"
+        min="0"
+    >
+
+
+    <label for="customProtein" data-i18n="proteinPer100">
+        Protein per 100 g (g)
+    </label>
+
+    <input
+        type="number"
+        id="customProtein"
+        placeholder="Example: 6.5" data-i18n-placeholder="proteinPlaceholder"
+        min="0"
+        step="0.1"
+    >
+
+
+    <label for="customCarbs" data-i18n="carbsPer100">
+        Carbohydrates per 100 g (g)
+    </label>
+
+    <input
+        type="number"
+        id="customCarbs"
+        placeholder="Example: 25" data-i18n-placeholder="carbsPlaceholder"
+        min="0"
+        step="0.1"
+    >
+
+
+    <label for="customFat" data-i18n="fatPer100">
+        Fat per 100 g (g)
+    </label>
+
+    <input
+        type="number"
+        id="customFat"
+        placeholder="Example: 7" data-i18n-placeholder="fatPlaceholder"
+        min="0"
+        step="0.1"
+    >
+
+
+    <button type="button" onclick="saveCustomFood()">
+        <span data-i18n="saveFood">Save Food</span>
+    </button>
+
+</div>
+        <section class="add-food">
+
+    <h2 id="addFoodTitle" data-i18n="addFoodTitle">Add Food</h2>
+
+    <label for="foodSelect" id="foodLabel" data-i18n="foodLabel">
+        Select Food
+    </label>
+
+    <select id="foodSelect">
+
+        <option value="" data-i18n="selectFoodPlaceholder">-- Select Food --</option>
+
+        <option value="rice" data-i18n="rice">Rice</option>
+        <option value="dal" data-i18n="dal">Dal</option>
+        <option value="roti" data-i18n="roti">Roti</option>
+        <option value="apple" data-i18n="apple">Apple</option>
+        <option value="banana" data-i18n="banana">Banana</option>
+        <option value="poha" data-i18n="poha">Poha</option>
+        <option value="paneer" data-i18n="paneer">Paneer</option>
+
+    </select>
+
+
+    <label for="quantity" id="quantityLabel" data-i18n="quantityLabel">
+        Quantity (grams)
+    </label>
+
+    <input
+        type="number"
+        id="quantity"
+        placeholder="Enter quantity" data-i18n-placeholder="quantityPlaceholder"
+        min="1"
+    >
+
+
+    <label for="mealType" id="mealLabel" data-i18n="mealLabel">
+        Select Meal
+    </label>
+
+    <select id="mealType">
+
+        <option value="" data-i18n="selectMealPlaceholder">-- Select Meal --</option>
+
+        <option value="breakfast" data-i18n="breakfastLabel">Breakfast</option>
+        <option value="lunch" data-i18n="lunchLabel">Lunch</option>
+        <option value="snack" data-i18n="snackLabel">Snack</option>
+        <option value="dinner" data-i18n="dinnerLabel">Dinner</option>
+
+    </select>
+
+
+    <button onclick="addFood()" id="addFoodButton" data-i18n="addFoodButton">
+        + Add Food
+    </button>
+
+</section>
+
+        <!-- Today's Food -->
+         <section class="habits-section">
+            <h2 id="habitsTitle" data-i18n="habitsTitle"> Today's Eating Habits</h2>
+            <div class="habit-item">
+                <span data-i18n="breakfastLabel">Breakfast</span>
+                <span id="breakfastStatus" data-i18n="notRecorded">Not Recorded</span>
+            </div>
+            <div class="habit-item">
+                <span data-i18n="lunchLabel">Lunch</span>
+                <span id="lunchStatus" data-i18n="notRecorded">Not Recorded</span>
+            </div>
+            <div class="habit-item">
+                <span data-i18n="snackLabel">Snack</span>
+                <span id="snackStatus" data-i18n="notRecorded">Not Recorded</span>
+                </div>
+                <div class="habit-item">
+                <span data-i18n="dinnerLabel">Dinner</span>
+                <span id="dinnerStatus" data-i18n="notRecorded">Not Recorded</span>
+                </div>
+                <div class="habit-summary">
+                    
+                    <p data-i18n="mealsRecordedLabel">
+                        Meals recorded today:
+                        <strong id="mealCount">0</strong></p>
+                    <p id="habitMessage" data-i18n="habitMessage">
+                        Start recording your meals today.
+                    </p>
+                    </div>
+
+         </section>
+
+         <section class="today-meals">
+            <h2 id="todayMealsTitle" data-i18n="todayMealsTitle">Today's Meals</h2>
+            <div class="meal-card">
+                <h3>Breakfast</h3>
+                <div id="breakfastFoods">
+                    <p class="no-meal">No breakfast recorded.</p>
+                </div>
+            </div>
+            <div class="meal-card">
+                <h3>Lunch</h3>
+                <div id="lunchFoods">
+                    <p class="no-meal">No lunch recorded.</p>
+                    </div>
+            </div>
+            <div class="meal-card">
+                <h3>Snack</h3>
+                <div id="snackFoods">
+                    <p class="no-meal">No snack recorded.</p>
+                </div>
+            </div>
+            <div class="meal-card">
+                <h3>Dinner</h3>
+                <div id="dinnerFoods">
+                    <p class="no-meal">No dinner recorded.</p>
+                </div>
+            </div>
+        </section>
+
+        
+        <section class="food-history">
+
+            <h2 id="historyTitle" data-i18n="historyTitle">Nutrition History</h2>
+
+            
+
+                <p data-i18n="historyDescription">
+                    View your previous nutrition records.
+                </p>
+                <button onclick="showHistory()" data-i18n="historyButton">
+                    View History
+                </button>
+                <div id="historyList"></div>
+
+        </section>
+
+
+        <!-- Recipe Section -->
+        <section class="recipe-preview">
+
+            <h2 id="recipeTitle" data-i18n="recipeTitle">🍲 Healthy Recipes</h2>
+
+            <p data-i18n="recipeDescription">
+                Discover healthy recipes and add your own favourites.
+            </p>
+
+            <button onclick="window.location.href='Recipe.html'" data-i18n="recipeButton">
+                Explore Recipes
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+
+        <p>© 2026 NutriSync</p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+    <script src="language.js"></script>
+    <script src="navigation.js"></script>
+
+</body>
+</html>

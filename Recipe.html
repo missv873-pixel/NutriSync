@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriSync - Meal Plan</title>
+    <link rel="stylesheet" href="Recipe.css">
+    <link rel="stylesheet" href="navigation.css">
+</head>
+
+<body>
+
+<header>
+    <div id="navigation"></div>
+
+    <div class="page-title">
+        <h1>🥗 NutriSync</h1>
+        <p data-i18n="mealPlannerSubtitle">Create a simple daily meal plan based on your food preference.</p>
+    </div>
+</header>
+
+<main class="meal-plan-page">
+
+    <section id="home" class="hero">
+        <h2 data-i18n="mealPlannerTitle">🍱 Indian Meal Planner</h2>
+        <p data-i18n="mealPlannerSubtitle">Create a simple daily meal plan based on your food preference.</p>
+
+        <div class="planner-controls">
+            <div>
+                <label for="foodPreference" data-i18n="preferenceLabel">Food Preference</label>
+                <select id="foodPreference">
+                    <option value="veg" data-i18n="vegOption">Vegetarian</option>
+                    <option value="nonveg" data-i18n="nonvegOption">Non-Vegetarian</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="planGoal" data-i18n="goalLabel">Plan Goal</label>
+                <select id="planGoal">
+                    <option value="balanced" data-i18n="balancedOption">Balanced</option>
+                    <option value="weight" data-i18n="weightOption">Weight Management</option>
+                    <option value="protein" data-i18n="proteinOption">Higher Protein</option>
+                </select>
+            </div>
+
+            <button type="button" onclick="generateMealPlan()" data-i18n="generatePlan">
+                Generate Meal Plan
+            </button>
+        </div>
+    </section>
+
+    <section id="meals">
+        <h2 data-i18n="savedPlan">Your Meal Plan</h2>
+        <div id="mealPlanContainer" class="meal-plan-grid">
+            <p id="mealPlanEmpty" class="empty-plan">Choose your preferences and generate a meal plan.</p>
+        </div>
+    </section>
+
+    <section id="recipes">
+        <h2 data-i18n="recipesTitle">🍳 Healthy Recipes</h2>
+
+        <div class="cards">
+            <div class="card">
+                <h3 data-i18n="vegetableSalad">🥗 Vegetable Salad</h3>
+                <p>Mixed vegetables with lemon and healthy spices.</p>
+                <button onclick="showRecipe('Vegetable Salad')" data-i18n="viewRecipe">View Recipe</button>
+            </div>
+
+            <div class="card">
+                <h3 data-i18n="dalRecipe">🥣 Healthy Dal</h3>
+                <p>Protein-rich dal with vegetables and Indian spices.</p>
+                <button onclick="showRecipe('Healthy Dal')" data-i18n="viewRecipe">View Recipe</button>
+            </div>
+
+            <div class="card">
+                <h3 data-i18n="khichdiRecipe">🍲 Vegetable Khichdi</h3>
+                <p>A simple and nutritious Indian meal.</p>
+                <button onclick="showRecipe('Vegetable Khichdi')" data-i18n="viewRecipe">View Recipe</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="tips">
+        <h2 data-i18n="tipsTitle">💡 Healthy Eating Tips</h2>
+        <ul class="tips">
+            <li data-i18n="tip1">Drink enough water throughout the day.</li>
+            <li data-i18n="tip2">Include fruits and vegetables in your meals.</li>
+            <li data-i18n="tip3">Choose whole grains whenever possible.</li>
+            <li data-i18n="tip4">Eat meals at regular times.</li>
+            <li data-i18n="tip5">Limit highly processed and sugary foods.</li>
+        </ul>
+    </section>
+
+    <section id="profile">
+        <h2 data-i18n="profileTitle">👤 User Profile</h2>
+        <div class="profile-box">
+            <p><strong data-i18n="nameLabel">Name:</strong> <span id="profileName">--</span></p>
+            <p><strong data-i18n="ageLabel">Age:</strong> <span id="profileAge">--</span></p>
+            <p><strong data-i18n="foodPreferenceLabel">Food Preference:</strong>
+                <span id="profileFood">--</span>
+            </p>
+            <button onclick="editProfile()" data-i18n="editProfile">✏️ Edit Profile</button>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 NutriSync | Nutrition & Health Tracking App</p>
+</footer>
+
+<script src="script.js"></script>
+<script src="language.js"></script>
+<script src="Recipe.js"></script>
+<script src="navigation.js"></script>
+</body>
+</html>

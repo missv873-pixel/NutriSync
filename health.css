@@ -1,0 +1,571 @@
+/* ==========================================
+   RESET
+========================================== */
+
+* {
+
+    box-sizing: border-box;
+
+    margin: 0;
+
+    padding: 0;
+
+}
+
+
+/* ==========================================
+   VARIABLES
+========================================== */
+
+:root {
+
+    --primary: #3f7d58;
+
+    --primary-dark: #2f6245;
+
+    --primary-light: #eaf4ed;
+
+    --background: #f6f8f6;
+
+    --card: #ffffff;
+
+    --text: #1f2933;
+
+    --muted: #7a858c;
+
+    --border: #e7ebe8;
+
+}
+
+
+/* ==========================================
+   BODY
+========================================== */
+
+body {
+
+    font-family:
+        "Inter",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background:
+        var(--background);
+
+    color:
+        var(--text);
+
+    min-height: 100vh;
+
+}
+
+
+/* ==========================================
+   HEADER
+========================================== */
+
+header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #3f7d58,
+            #6a9b73
+        );
+
+    color: white;
+
+    text-align: center;
+
+    padding: 30px 20px 45px;
+
+    border-radius:
+        0 0 30px 30px;
+
+}
+
+
+header h1 {
+
+    font-size: 30px;
+
+}
+
+
+header p {
+
+    margin-top: 7px;
+
+    font-size: 14px;
+
+    opacity: 0.9;
+
+}
+
+
+/* ==========================================
+   MAIN
+========================================== */
+
+main {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    margin: -20px auto 0;
+
+    padding: 0 18px 30px;
+
+}
+
+
+/* ==========================================
+   CARD
+========================================== */
+
+section {
+
+    background:
+        var(--card);
+
+    padding: 22px;
+
+    margin-bottom: 18px;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(30, 60, 40, 0.07);
+
+}
+
+
+/* ==========================================
+   HEADINGS
+========================================== */
+
+section h2 {
+
+    font-size: 20px;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* ==========================================
+   LABEL
+========================================== */
+
+label {
+
+    display: block;
+
+    margin:
+        14px 0 7px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+}
+
+
+/* ==========================================
+   INPUT
+========================================== */
+
+input {
+
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: #fafcfb;
+
+    font-size: 14px;
+
+    outline: none;
+
+}
+
+
+input:focus {
+
+    border-color:
+        var(--primary);
+
+    background: white;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(63, 125, 88, 0.1);
+
+}
+
+
+/* ==========================================
+   BUTTON
+========================================== */
+
+button {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        var(--primary);
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+button:hover {
+
+    background:
+        var(--primary-dark);
+
+}
+
+
+/* ==========================================
+   RESULT
+========================================== */
+
+.result-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 15px 0;
+
+    border-bottom:
+        1px solid var(--border);
+
+}
+
+
+.result-item span {
+
+    color:
+        var(--muted);
+
+    font-size: 14px;
+
+}
+
+
+.result-item strong {
+
+    color:
+        var(--primary-dark);
+
+    font-size: 18px;
+
+}
+
+
+/* ==========================================
+   RECOMMENDATION
+========================================== */
+
+.recommendation {
+
+    margin-top: 18px;
+
+    padding: 16px;
+
+    border-radius: 14px;
+
+    background:
+        var(--primary-light);
+
+}
+
+
+.recommendation h3 {
+
+    color:
+        var(--primary-dark);
+
+    font-size: 15px;
+
+    margin-bottom: 7px;
+
+}
+
+
+.recommendation p {
+
+    color:
+        #52615a;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer {
+
+    text-align: center;
+
+    padding: 25px;
+
+    color:
+        var(--muted);
+
+    font-size: 12px;
+
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 480px) {
+
+    header h1 {
+
+        font-size: 27px;
+
+    }
+
+    main {
+
+        padding:
+            0 14px 25px;
+
+    }
+
+    section {
+
+        padding: 18px;
+
+    }
+
+}
+/* ==========================================
+   WATER TRACKER
+========================================== */
+
+.water-card {
+    text-align: center;
+}
+
+.water-goal {
+    color: var(--muted);
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.water-counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+}
+
+.water-btn {
+    width: 45px;
+    height: 45px;
+
+    margin: 0;
+    padding: 0;
+
+    border-radius: 50%;
+
+    font-size: 25px;
+    line-height: 1;
+
+    background: var(--primary);
+}
+
+.water-count {
+    min-width: 110px;
+}
+
+.water-count strong {
+    font-size: 28px;
+    color: var(--primary-dark);
+}
+
+.water-count span {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.water-progress {
+    width: 100%;
+    height: 12px;
+
+    margin-top: 20px;
+
+    background: #e7ebe8;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.water-progress-bar {
+    width: 0%;
+    height: 100%;
+
+    background: var(--primary);
+
+    border-radius: 20px;
+
+    transition: width 0.3s ease;
+}
+
+.water-message {
+    margin-top: 12px;
+
+    font-size: 13px;
+
+    color: var(--primary-dark);
+}
+/* ==========================================
+   DAILY ACTIVITY
+========================================== */
+
+.activity-card p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.activity-card label {
+    display: block;
+
+    margin: 15px 0 7px;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    color: #4b5563;
+}
+
+.activity-summary {
+
+    margin-top: 20px;
+
+    padding: 16px;
+
+    background: var(--primary-light);
+
+    border-radius: 14px;
+}
+
+.activity-summary h3 {
+
+    margin-bottom: 10px;
+
+    color: var(--primary-dark);
+
+    font-size: 16px;
+}
+
+.activity-summary p {
+
+    margin-top: 7px;
+
+    color: var(--text);
+
+}
+
+.activity-summary strong {
+
+    color: var(--primary-dark);
+
+}
+/* ==========================================
+   EXERCISE TIMER
+========================================== */
+
+.exercise-timer {
+
+    margin-top: 20px;
+
+    padding: 18px;
+
+    background: var(--primary-light);
+
+    border-radius: 15px;
+
+    text-align: center;
+}
+
+.exercise-timer h3 {
+
+    color: var(--primary-dark);
+
+    font-size: 16px;
+
+    margin-bottom: 15px;
+}
+
+#timerDisplay {
+
+    font-size: 36px;
+
+    font-weight: 700;
+
+    color: var(--primary-dark);
+
+    letter-spacing: 2px;
+
+    margin-bottom: 15px;
+}
+
+.timer-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
+.timer-buttons button {
+
+    width: auto;
+
+    margin: 0;
+
+    padding: 9px 12px;
+
+    font-size: 12px;
+}
