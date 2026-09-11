@@ -1,118 +1,112 @@
 /* ==========================================
    NUTRISYNC - DASHBOARD
-   ========================================== */
+========================================== */
 
 
 /* ==========================================
-   AUTHENTICATION
+   AUTHENTICATION CHECK
 ========================================== */
 
 if (localStorage.getItem("nutrisyncLoggedIn") !== "true") {
+
     window.location.href = "auth.html";
+
 }
 
 
 /* ==========================================
-   NUTRITION DATA
-   script.js already creates:
-   currentUser
-   allFoods
-   dailyFoods
+   GET TODAY'S FOOD
 ========================================== */
 
 function getDashboardFoods() {
 
-    if (typeof allFoods === "undefined") {
-        return [];
-    }
-
-    return allFoods;
-}
-
-
-function getTodayDashboardFoods() {
+    // script.js already loads these variables
+    // We use the existing data instead of declaring
+    // currentUser again.
 
     if (typeof dailyFoods !== "undefined") {
+
         return dailyFoods;
+
     }
 
-    const today =
-        new Date().toISOString().split("T")[0];
+    return [];
 
-    return getDashboardFoods().filter(function (food) {
-
-        return food.date === today;
-
-    });
 }
 
 
 /* ==========================================
-   CALCULATE NUTRITION
+   UPDATE NUTRITION SUMMARY
 ========================================== */
 
 function updateDashboardNutrition() {
 
-    const foods =
-        getTodayDashboardFoods();
+    const foods = getDashboardFoods();
 
-    let calories = 0;
-    let protein = 0;
-    let carbs = 0;
-    let fat = 0;
+
+    let totalCalories = 0;
+
+    let totalProtein = 0;
+
+    let totalCarbs = 0;
+
+    let totalFat = 0;
 
 
     foods.forEach(function (food) {
 
-        calories += Number(food.calories) || 0;
-        protein += Number(food.protein) || 0;
-        carbs += Number(food.carbs) || 0;
-        fat += Number(food.fat) || 0;
+        totalCalories += Number(food.calories) || 0;
+
+        totalProtein += Number(food.protein) || 0;
+
+        totalCarbs += Number(food.carbs) || 0;
+
+        totalFat += Number(food.fat) || 0;
 
     });
 
 
-    const caloriesElement =
+    const calories =
         document.getElementById("dashboardCalories");
 
-    const proteinElement =
+    const protein =
         document.getElementById("dashboardProtein");
 
-    const carbsElement =
+    const carbs =
         document.getElementById("dashboardCarbs");
 
-    const fatElement =
+    const fat =
         document.getElementById("dashboardFat");
 
 
-    if (caloriesElement) {
+    if (calories) {
 
-        caloriesElement.textContent =
-            Math.round(calories) + " kcal";
-
-    }
-
-
-    if (proteinElement) {
-
-        proteinElement.textContent =
-            protein.toFixed(1) + " g";
+        calories.textContent =
+            Math.round(totalCalories) + " kcal";
 
     }
 
 
-    if (carbsElement) {
+    if (protein) {
 
-        carbsElement.textContent =
-            carbs.toFixed(1) + " g";
+        protein.textContent =
+            totalProtein.toFixed(1) + " g";
 
     }
 
 
-    if (fatElement) {
+    if (carbs) {
 
-        fatElement.textContent =
-            fat.toFixed(1) + " g";
+        carbs.textContent =
+            totalCarbs.toFixed(1) + " g";
+
+    }
+
+
+    if (fat) {
+
+        fat.textContent =
+            totalFat.toFixed(1) + " g";
 
     }
 
@@ -120,26 +114,21 @@ function updateDashboardNutrition() {
 
 
 /* ==========================================
-   TODAY'S MEALS
+   UPDATE TODAY'S MEAL COUNTS
 ========================================== */
 
 function updateDashboardMeals() {
 
-    const foods =
-        getTodayDashboardFoods();
+    const foods = getDashboardFoods();
 
 
-    const mealCounts = {
+    let breakfast = 0;
 
-        breakfast: 0,
+    let lunch = 0;
 
-        lunch: 0,
+    let snack = 0;
 
-        snack: 0,
-
-        dinner: 0
-
-    };
+    let dinner = 0;
 
 
     foods.forEach(function (food) {
@@ -150,56 +139,82 @@ function updateDashboardMeals() {
                 .trim();
 
 
-        if (
-            Object.prototype.hasOwnProperty
-                .call(mealCounts, meal)
-        ) {
+        if (meal === "breakfast") {
 
-            mealCounts[meal]++;
+            breakfast++;
+
+        }
+
+        else if (meal === "lunch") {
+
+            lunch++;
+
+        }
+
+        else if (meal === "snack") {
+
+            snack++;
+
+        }
+
+        else if (meal === "dinner") {
+
+            dinner++;
 
         }
 
     });
 
 
-    const breakfast =
+    const breakfastElement =
         document.getElementById("breakfastCount");
 
-    const lunch =
+    const lunchElement =
         document.getElementById("lunchCount");
 
-    const snack =
+    const snackElement =
         document.getElementById("snackCount");
 
-    const dinner =
+    const dinnerElement =
         document.getElementById("dinnerCount");
 
 
-    if (breakfast) {
-        breakfast.textContent =
-            mealCounts.breakfast;
+    if (breakfastElement) {
+
+        breakfastElement.textContent =
+            breakfast;
+
     }
 
-    if (lunch) {
-        lunch.textContent =
-            mealCounts.lunch;
+
+    if (lunchElement) {
+
+        lunchElement.textContent =
+            lunch;
+
     }
 
-    if (snack) {
-        snack.textContent =
-            mealCounts.snack;
+
+    if (snackElement) {
+
+        snackElement.textContent =
+            snack;
+
     }
 
-    if (dinner) {
-        dinner.textContent =
-            mealCounts.dinner;
+
+    if (dinnerElement) {
+
+        dinnerElement.textContent =
+            dinner;
+
     }
 
 }
 
 
 /* ==========================================
-   NUTRITION REPORT
+   UPDATE NUTRITION REPORT
 ========================================== */
 
 function updateDashboardReport() {
@@ -207,11 +222,11 @@ function updateDashboardReport() {
     const report =
         document.getElementById("reportText");
 
+
     if (!report) return;
 
 
-    const foods =
-        getTodayDashboardFoods();
+    const foods = getDashboardFoods();
 
 
     if (foods.length === 0) {
@@ -225,16 +240,22 @@ function updateDashboardReport() {
 
 
     let calories = 0;
+
     let protein = 0;
+
     let carbs = 0;
+
     let fat = 0;
 
 
     foods.forEach(function (food) {
 
         calories += Number(food.calories) || 0;
+
         protein += Number(food.protein) || 0;
+
         carbs += Number(food.carbs) || 0;
+
         fat += Number(food.fat) || 0;
 
     });
@@ -257,7 +278,7 @@ function updateDashboardReport() {
 
 
 /* ==========================================
-   NUTRITION HISTORY
+   UPDATE NUTRITION HISTORY
 ========================================== */
 
 function updateDashboardHistory() {
@@ -265,14 +286,14 @@ function updateDashboardHistory() {
     const historyList =
         document.getElementById("historyList");
 
+
     if (!historyList) return;
 
 
-    const foods =
-        getDashboardFoods();
-
-
-    if (foods.length === 0) {
+    if (
+        typeof allFoods === "undefined" ||
+        allFoods.length === 0
+    ) {
 
         historyList.innerHTML = `
             <p class="empty-message">
@@ -288,7 +309,7 @@ function updateDashboardHistory() {
     const groupedFoods = {};
 
 
-    foods.forEach(function (food) {
+    allFoods.forEach(function (food) {
 
         if (!groupedFoods[food.date]) {
 
@@ -310,16 +331,22 @@ function updateDashboardHistory() {
         .forEach(function (date) {
 
             let calories = 0;
+
             let protein = 0;
+
             let carbs = 0;
+
             let fat = 0;
 
 
             groupedFoods[date].forEach(function (food) {
 
                 calories += Number(food.calories) || 0;
+
                 protein += Number(food.protein) || 0;
+
                 carbs += Number(food.carbs) || 0;
+
                 fat += Number(food.fat) || 0;
 
             });
@@ -357,286 +384,7 @@ function updateDashboardHistory() {
 
 
 /* ==========================================
-   HEALTH DATA
-========================================== */
-
-function updateDashboardHealth() {
-
-    const bmiElement =
-        document.getElementById("dashboardBMI");
-
-    const statusElement =
-        document.getElementById(
-            "dashboardHealthStatus"
-        );
-
-
-    const savedHealth =
-        localStorage.getItem("nutrisyncHealth");
-
-
-    if (!savedHealth) {
-
-        if (bmiElement) {
-            bmiElement.textContent = "--";
-        }
-
-        if (statusElement) {
-            statusElement.textContent =
-                "Not assessed";
-        }
-
-        return;
-
-    }
-
-
-    try {
-
-        const health =
-            JSON.parse(savedHealth);
-
-
-        if (bmiElement) {
-
-            bmiElement.textContent =
-                health.bmi || "--";
-
-        }
-
-
-        if (statusElement) {
-
-            statusElement.textContent =
-                health.status || "Not assessed";
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Health data error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   WATER
-========================================== */
-
-function updateDashboardWater() {
-
-    const waterElement =
-        document.getElementById(
-            "dashboardWater"
-        );
-
-    if (!waterElement) return;
-
-
-    const water =
-        Number(
-            localStorage.getItem("waterCount")
-        ) || 0;
-
-
-    waterElement.textContent =
-        water + " / 8 glasses";
-
-}
-
-
-/* ==========================================
-   ACTIVITY
-========================================== */
-
-function updateDashboardActivity() {
-
-    const stepsElement =
-        document.getElementById(
-            "dashboardSteps"
-        );
-
-    const exerciseElement =
-        document.getElementById(
-            "dashboardExercise"
-        );
-
-
-    const savedActivity =
-        localStorage.getItem(
-            "nutrisyncActivity"
-        );
-
-
-    if (!savedActivity) {
-
-        if (stepsElement) {
-            stepsElement.textContent = "0";
-        }
-
-        if (exerciseElement) {
-            exerciseElement.textContent =
-                "0 min";
-        }
-
-        return;
-
-    }
-
-
-    try {
-
-        const activity =
-            JSON.parse(savedActivity);
-
-
-        if (stepsElement) {
-
-            stepsElement.textContent =
-                activity.steps || 0;
-
-        }
-
-
-        if (exerciseElement) {
-
-            exerciseElement.textContent =
-                (activity.exerciseMinutes || 0) +
-                " min";
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Activity data error:",
-            error
-        );
-
-    }
-
-}
-
-
-/* ==========================================
-   MEAL PLAN
-========================================== */
-
-function updateDashboardMealPlan() {
-
-    const container =
-        document.getElementById(
-            "dashboardMealPlan"
-        );
-
-    if (!container) return;
-
-
-    const savedPlan =
-        localStorage.getItem(
-            "nutrisyncMealPlan"
-        );
-
-
-    if (!savedPlan) {
-
-        container.innerHTML =
-            "<p>No meal plan created yet.</p>";
-
-        return;
-
-    }
-
-
-    try {
-
-        const data =
-            JSON.parse(savedPlan);
-
-
-        if (!data.plan) {
-
-            container.innerHTML =
-                "<p>No meal plan created yet.</p>";
-
-            return;
-
-        }
-
-
-        const plan =
-            data.plan;
-
-
-        container.innerHTML = `
-
-            <div class="dashboard-meal-item">
-
-                <strong>Breakfast</strong>
-
-                <span>
-                    ${plan.breakfast}
-                </span>
-
-            </div>
-
-
-            <div class="dashboard-meal-item">
-
-                <strong>Lunch</strong>
-
-                <span>
-                    ${plan.lunch}
-                </span>
-
-            </div>
-
-
-            <div class="dashboard-meal-item">
-
-                <strong>Snack</strong>
-
-                <span>
-                    ${plan.snack}
-                </span>
-
-            </div>
-
-
-            <div class="dashboard-meal-item">
-
-                <strong>Dinner</strong>
-
-                <span>
-                    ${plan.dinner}
-                </span>
-
-            </div>
-
-        `;
-
-    } catch (error) {
-
-        console.error(
-            "Meal plan data error:",
-            error
-        );
-
-        container.innerHTML =
-            "<p>No meal plan available.</p>";
-
-    }
-
-}
-
-
-/* ==========================================
-   REFRESH EVERYTHING
+   REFRESH DASHBOARD
 ========================================== */
 
 function refreshDashboard() {
@@ -648,14 +396,6 @@ function refreshDashboard() {
     updateDashboardReport();
 
     updateDashboardHistory();
-
-    updateDashboardHealth();
-
-    updateDashboardWater();
-
-    updateDashboardActivity();
-
-    updateDashboardMealPlan();
 
 }
 
@@ -675,7 +415,7 @@ document.addEventListener(
 
 
 /* ==========================================
-   WHEN RETURNING TO DASHBOARD
+   REFRESH WHEN RETURNING TO PAGE
 ========================================== */
 
 window.addEventListener(
