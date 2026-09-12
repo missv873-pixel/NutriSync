@@ -1049,3 +1049,13 @@ updateNutrition();
 updateEatingHabits();
 
 displayMealsByType();
+
+/* ==========================================
+   START OFFLINE DATABASE
+========================================== */
+
+if (typeof migrateNutritionToDB === "function") {
+
+    migrateNutritionToDB();
+
+}
