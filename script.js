@@ -458,7 +458,55 @@ function addFood() {
         "dailyFoods_" + currentUser,
         JSON.stringify(dailyFoods)
     );
+    /* ==========================================
+       SAVE FOOD TO OFFLINE DATABASE
+    ========================================== */
 
+    if (currentUser && typeof dbPut === "function") {
+
+        dbPut(
+            "nutrition",
+            {
+                userEmail: currentUser,
+
+                name: foodEntry.name,
+
+                quantity: foodEntry.quantity,
+
+                calories: foodEntry.calories,
+
+                protein: foodEntry.protein,
+
+                carbs: foodEntry.carbs,
+
+                fat: foodEntry.fat,
+
+                meal: foodEntry.meal,
+
+                date: foodEntry.date,
+
+                createdAt:
+                    new Date().toISOString()
+
+            }
+        )
+        .then(function () {
+
+            console.log(
+                "Food saved to NutriSync offline database."
+            );
+
+        })
+        .catch(function (error) {
+
+            console.error(
+                "Database save error:",
+                error
+            );
+
+        });
+
+    }
 
     // ==========================================
     // UPDATE SCREEN
