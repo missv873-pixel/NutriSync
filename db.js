@@ -18,15 +18,12 @@ function openNutriSyncDB() {
         const request =
             indexedDB.open(DB_NAME, DB_VERSION);
 
-
         request.onupgradeneeded = function (event) {
 
             const db = event.target.result;
 
 
-            /* ------------------------------
-               USERS
-            ------------------------------ */
+            /* USERS */
 
             if (!db.objectStoreNames.contains("users")) {
 
@@ -40,9 +37,7 @@ function openNutriSyncDB() {
             }
 
 
-            /* ------------------------------
-               NUTRITION
-            ------------------------------ */
+            /* NUTRITION */
 
             if (!db.objectStoreNames.contains("nutrition")) {
 
@@ -74,9 +69,7 @@ function openNutriSyncDB() {
             }
 
 
-            /* ------------------------------
-               HEALTH
-            ------------------------------ */
+            /* HEALTH */
 
             if (!db.objectStoreNames.contains("health")) {
 
@@ -90,9 +83,7 @@ function openNutriSyncDB() {
             }
 
 
-            /* ------------------------------
-               WATER
-            ------------------------------ */
+            /* WATER */
 
             if (!db.objectStoreNames.contains("water")) {
 
@@ -106,9 +97,7 @@ function openNutriSyncDB() {
             }
 
 
-            /* ------------------------------
-               ACTIVITY
-            ------------------------------ */
+            /* ACTIVITY */
 
             if (!db.objectStoreNames.contains("activity")) {
 
@@ -122,9 +111,7 @@ function openNutriSyncDB() {
             }
 
 
-            /* ------------------------------
-               MEAL PLANS
-            ------------------------------ */
+            /* MEAL PLANS */
 
             if (!db.objectStoreNames.contains("mealPlans")) {
 
@@ -138,9 +125,7 @@ function openNutriSyncDB() {
             }
 
 
-            /* ------------------------------
-               PROFILES
-            ------------------------------ */
+            /* PROFILES */
 
             if (!db.objectStoreNames.contains("profiles")) {
 
@@ -182,16 +167,23 @@ function getNutriSyncCurrentUser() {
 
     try {
 
-        const data =
+        const user =
             JSON.parse(
                 localStorage.getItem(
                     "nutrisyncCurrentUser"
                 ) || "null"
             );
 
-        return data ? data.email : null;
+        return user ? user.email : null;
 
-    } catch (error) {
+    }
+
+    catch (error) {
+
+        console.error(
+            "Error getting current user:",
+            error
+        );
 
         return null;
 
@@ -201,176 +193,196 @@ function getNutriSyncCurrentUser() {
 
 
 /* ==========================================
-   ADD / UPDATE DATA
+   SAVE DATA
 ========================================== */
 
 function dbPut(storeName, data) {
 
-    return openNutriSyncDB().then(function (db) {
+    return openNutriSyncDB()
 
-        return new Promise(function (resolve, reject) {
+        .then(function (db) {
 
-            const transaction =
-                db.transaction(
-                    storeName,
-                    "readwrite"
-                );
+            return new Promise(function (resolve, reject) {
 
-            const store =
-                transaction.objectStore(storeName);
+                const transaction =
+                    db.transaction(
+                        storeName,
+                        "readwrite"
+                    );
 
-            const request =
-                store.put(data);
+                const store =
+                    transaction.objectStore(
+                        storeName
+                    );
 
-
-            request.onsuccess = function () {
-
-                resolve(request.result);
-
-            };
+                const request =
+                    store.put(data);
 
 
-            request.onerror = function () {
+                request.onsuccess = function () {
 
-                reject(request.error);
+                    resolve(request.result);
 
-            };
+                };
+
+
+                request.onerror = function () {
+
+                    reject(request.error);
+
+                };
+
+            });
 
         });
-
-    });
 
 }
 
 
 /* ==========================================
-   GET DATA BY USER
+   GET DATA
 ========================================== */
 
-function dbGet(storeName, userEmail) {
+function dbGet(storeName, key) {
 
-    return openNutriSyncDB().then(function (db) {
+    return openNutriSyncDB()
 
-        return new Promise(function (resolve, reject) {
+        .then(function (db) {
 
-            const transaction =
-                db.transaction(
-                    storeName,
-                    "readonly"
-                );
+            return new Promise(function (resolve, reject) {
 
-            const store =
-                transaction.objectStore(storeName);
+                const transaction =
+                    db.transaction(
+                        storeName,
+                        "readonly"
+                    );
 
-            const request =
-                store.get(userEmail);
+                const store =
+                    transaction.objectStore(
+                        storeName
+                    );
 
-
-            request.onsuccess = function () {
-
-                resolve(request.result || null);
-
-            };
+                const request =
+                    store.get(key);
 
 
-            request.onerror = function () {
+                request.onsuccess = function () {
 
-                reject(request.error);
+                    resolve(
+                        request.result || null
+                    );
 
-            };
+                };
+
+
+                request.onerror = function () {
+
+                    reject(request.error);
+
+                };
+
+            });
 
         });
-
-    });
 
 }
 
 
 /* ==========================================
-   GET ALL NUTRITION RECORDS
+   GET ALL NUTRITION
 ========================================== */
 
 function dbGetNutrition(userEmail) {
 
-    return openNutriSyncDB().then(function (db) {
+    return openNutriSyncDB()
 
-        return new Promise(function (resolve, reject) {
+        .then(function (db) {
 
-            const transaction =
-                db.transaction(
-                    "nutrition",
-                    "readonly"
-                );
+            return new Promise(function (resolve, reject) {
 
-            const store =
-                transaction.objectStore("nutrition");
+                const transaction =
+                    db.transaction(
+                        "nutrition",
+                        "readonly"
+                    );
 
-            const index =
-                store.index("userEmail");
+                const store =
+                    transaction.objectStore(
+                        "nutrition"
+                    );
 
-            const request =
-                index.getAll(userEmail);
+                const index =
+                    store.index("userEmail");
 
-
-            request.onsuccess = function () {
-
-                resolve(request.result || []);
-
-            };
+                const request =
+                    index.getAll(userEmail);
 
 
-            request.onerror = function () {
+                request.onsuccess = function () {
 
-                reject(request.error);
+                    resolve(
+                        request.result || []
+                    );
 
-            };
+                };
+
+
+                request.onerror = function () {
+
+                    reject(request.error);
+
+                };
+
+            });
 
         });
-
-    });
 
 }
 
 
 /* ==========================================
-   DELETE NUTRITION RECORD
+   DELETE NUTRITION
 ========================================== */
 
 function dbDeleteNutrition(id) {
 
-    return openNutriSyncDB().then(function (db) {
+    return openNutriSyncDB()
 
-        return new Promise(function (resolve, reject) {
+        .then(function (db) {
 
-            const transaction =
-                db.transaction(
-                    "nutrition",
-                    "readwrite"
-                );
+            return new Promise(function (resolve, reject) {
 
-            const store =
-                transaction.objectStore("nutrition");
+                const transaction =
+                    db.transaction(
+                        "nutrition",
+                        "readwrite"
+                    );
 
-            const request =
-                store.delete(id);
+                const store =
+                    transaction.objectStore(
+                        "nutrition"
+                    );
 
-
-            request.onsuccess = function () {
-
-                resolve();
-
-            };
+                const request =
+                    store.delete(id);
 
 
-            request.onerror = function () {
+                request.onsuccess = function () {
 
-                reject(request.error);
+                    resolve();
 
-            };
+                };
+
+
+                request.onerror = function () {
+
+                    reject(request.error);
+
+                };
+
+            });
 
         });
-
-    });
 
 }
 
@@ -454,6 +466,86 @@ function dbSaveProfile(data) {
     return dbPut(
         "profiles",
         data
+    );
+
+}
+
+
+/* ==========================================
+   MIGRATE OLD NUTRITION DATA
+========================================== */
+
+async function migrateNutritionToDB() {
+
+    const userEmail =
+        getNutriSyncCurrentUser();
+
+    if (!userEmail) {
+        return;
+    }
+
+
+    const oldKey =
+        "allFoods_" + userEmail;
+
+    const oldFoods =
+        JSON.parse(
+            localStorage.getItem(oldKey) || "[]"
+        );
+
+
+    if (!Array.isArray(oldFoods)) {
+        return;
+    }
+
+
+    const existingFoods =
+        await dbGetNutrition(userEmail);
+
+
+    /*
+       Prevent duplicate migration.
+    */
+
+    if (existingFoods.length > 0) {
+        return;
+    }
+
+
+    for (const food of oldFoods) {
+
+        await dbPut(
+            "nutrition",
+            {
+                userEmail: userEmail,
+
+                name: food.name,
+
+                quantity: Number(food.quantity) || 0,
+
+                calories: Number(food.calories) || 0,
+
+                protein: Number(food.protein) || 0,
+
+                carbs: Number(food.carbs) || 0,
+
+                fat: Number(food.fat) || 0,
+
+                meal: food.meal || "",
+
+                date: food.date || "",
+
+                createdAt:
+                    new Date().toISOString()
+
+            }
+        );
+
+    }
+
+
+    console.log(
+        "Nutrition data migrated to IndexedDB."
     );
 
 }
