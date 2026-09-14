@@ -1,156 +1,488 @@
-* { box-sizing: border-box; }
+/* ==========================================
+   NUTRISYNC - MEAL PLAN & RECIPES
+   Matching the Health & Nutrition pages
+========================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #3f7d58;
+    --primary-dark: #2f6245;
+    --primary-light: #eaf4ed;
+
+    --background: #f6f8f6;
+    --card: #ffffff;
+
+    --text: #1f2933;
+    --muted: #7a858c;
+    --border: #e7ebe8;
+
+    --shadow: 0 8px 25px rgba(30, 60, 40, 0.07);
+
+    --radius: 20px;
+}
 
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f5f8f5;
-    color: #333;
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+    min-height: 100vh;
 }
 
+
+/* ==========================================
+   HEADER
+========================================== */
+
 header {
-    background: #2e7d32;
+    background: linear-gradient(
+        135deg,
+        #3f7d58,
+        #6a9b73
+    );
+
     color: white;
-    padding-bottom: 25px;
+
+    padding: 20px 20px 45px;
+
+    border-radius: 0 0 30px 30px;
+
+    box-shadow:
+        0 8px 25px rgba(63, 125, 88, 0.2);
 }
+
+
+/* ==========================================
+   PAGE TITLE
+========================================== */
 
 .page-title {
     text-align: center;
-    padding: 25px 20px 5px;
+    margin-top: 18px;
 }
 
-.page-title h1 { margin: 0 0 8px; font-size: 30px; }
-.page-title p { margin: 0; opacity: .9; }
-
-.meal-plan-page {
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
+.page-title h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
 }
+
+.page-title p {
+    margin-top: 6px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+
+/* ==========================================
+   SECTIONS
+========================================== */
 
 section {
-    padding: 35px 7%;
+    width: 100%;
+    max-width: 1100px;
+
+    margin: -20px auto 20px;
+
+    padding: 25px 20px;
+
+    background: var(--card);
+
+    border-radius: var(--radius);
+
+    box-shadow: var(--shadow);
+
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+section + section {
+    margin-top: 20px;
 }
 
 section h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #2e7d32;
-}
+    font-size: 21px;
 
-.hero {
-    text-align: center;
-    background: #dcedc8;
-    border-radius: 0 0 18px 18px;
-}
+    color: var(--text);
 
-.hero h2 { font-size: 30px; margin-bottom: 10px; }
-.hero p { margin-bottom: 25px; }
+    margin-bottom: 18px;
 
-.planner-controls {
-    max-width: 700px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
     text-align: left;
 }
 
-.planner-controls label {
-    display: block;
-    margin-bottom: 7px;
-    font-weight: bold;
+
+/* ==========================================
+   HOME / HERO
+========================================== */
+
+.hero {
+    text-align: center;
+
+    padding: 35px 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f7fbf8
+        );
 }
 
-.planner-controls select {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #cfd8cf;
-    border-radius: 8px;
-    background: white;
+.hero h2 {
+    font-size: 25px;
+
+    color: var(--primary-dark);
+
+    margin-bottom: 10px;
 }
 
-.planner-controls button {
-    grid-column: 1 / -1;
-    width: 100%;
+.hero p {
+    color: var(--muted);
+
+    font-size: 14px;
+
+    line-height: 1.5;
+
+    margin-bottom: 20px;
 }
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
 
 button {
-    background: #388e3c;
-    color: white;
     border: none;
-    padding: 11px 18px;
-    border-radius: 8px;
+
+    border-radius: 12px;
+
+    background: var(--primary);
+
+    color: white;
+
+    padding: 12px 18px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
     cursor: pointer;
-    font-weight: bold;
+
+    transition: all 0.2s ease;
+
+    box-shadow:
+        0 5px 12px rgba(63, 125, 88, 0.18);
 }
 
-button:hover { background: #1b5e20; }
+button:hover {
+    background: var(--primary-dark);
 
-.meal-plan-grid, .cards {
+    transform: translateY(-1px);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+
+/* ==========================================
+   MEAL FILTER
+========================================== */
+
+.filter {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 22px;
+}
+
+.filter button {
+    padding: 9px 15px;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+
+    gap: 15px;
 }
 
-.meal-card, .card {
-    background: white;
-    padding: 22px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,.1);
+.card {
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f7fbf8
+        );
+
+    padding: 20px;
+
+    border-radius: 16px;
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 5px 18px rgba(30, 60, 40, 0.05);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.meal-card h3, .card h3 {
-    color: #388e3c;
-    margin-top: 0;
+.card:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 22px rgba(30, 60, 40, 0.09);
 }
 
-.meal-card p, .card p {
+.card h3 {
+    color: var(--primary-dark);
+
+    font-size: 17px;
+
+    margin-bottom: 9px;
+}
+
+.card p {
+    color: var(--muted);
+
+    font-size: 13px;
+
     line-height: 1.5;
+
+    margin-bottom: 14px;
 }
 
-.empty-plan {
-    grid-column: 1 / -1;
-    text-align: center;
-    color: #777;
-    padding: 30px;
-    background: white;
-    border-radius: 12px;
+
+/* ==========================================
+   MEAL CARDS
+========================================== */
+
+.meal span {
+    display: inline-block;
+
+    padding: 5px 10px;
+
+    border-radius: 20px;
+
+    background: var(--primary-light);
+
+    color: var(--primary-dark);
+
+    font-size: 11px;
+
+    font-weight: 600;
 }
+
+
+/* ==========================================
+   RECIPES
+========================================== */
+
+#Recipes {
+    background: var(--card);
+}
+
+#Recipes .card button {
+    margin-top: 5px;
+
+    width: auto;
+
+    padding: 9px 14px;
+
+    font-size: 13px;
+}
+
+
+/* ==========================================
+   HEALTH TIPS
+========================================== */
 
 .tips {
-    max-width: 700px;
-    margin: auto;
-    padding-left: 0;
     list-style: none;
+
+    max-width: 700px;
+
+    margin: 0 auto;
+
+    display: grid;
+
+    gap: 10px;
 }
 
 .tips li {
-    background: white;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,.08);
+    background: var(--primary-light);
+
+    color: var(--primary-dark);
+
+    padding: 14px 16px;
+
+    border-radius: 12px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    border: 1px solid #dfece3;
 }
+
+
+/* ==========================================
+   PROFILE
+========================================== */
 
 .profile-box {
-    background: white;
-    max-width: 450px;
+    max-width: 500px;
+
     margin: auto;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,.1);
+
+    padding: 20px;
+
+    background: #f7faf8;
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 5px 18px rgba(30, 60, 40, 0.05);
 }
 
-.profile-box p { margin: 15px 0; }
+.profile-box p {
+    margin: 13px 0;
+
+    font-size: 14px;
+
+    color: var(--muted);
+}
+
+.profile-box strong {
+    color: var(--text);
+}
+
+.profile-box button {
+    margin-top: 8px;
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
 
 footer {
     text-align: center;
-    background: #2e7d32;
-    color: white;
-    padding: 20px;
+
+    padding: 25px;
+
+    color: var(--muted);
+
+    font-size: 12px;
 }
 
+
+/* ==========================================
+   MOBILE
+========================================== */
+
 @media (max-width: 700px) {
-    .planner-controls { grid-template-columns: 1fr; }
-    .planner-controls button { grid-column: auto; }
+
+    header {
+        padding: 18px 15px 40px;
+    }
+
+    .page-title {
+        margin-top: 12px;
+    }
+
+    .page-title h1 {
+        font-size: 28px;
+    }
+
+    section {
+        margin-left: 14px;
+        margin-right: 14px;
+
+        width: auto;
+
+        padding: 18px;
+
+        border-radius: 18px;
+    }
+
+    section h2 {
+        font-size: 19px;
+    }
+
+    .hero {
+        padding: 28px 17px;
+    }
+
+    .hero h2 {
+        font-size: 22px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .filter {
+        gap: 7px;
+    }
+
+    .filter button {
+        padding: 8px 12px;
+    }
+
+    .card {
+        padding: 17px;
+    }
+
+    .tips li {
+        padding: 13px;
+    }
+
+}
+
+
+/* ==========================================
+   SMALL MOBILE
+========================================== */
+
+@media (max-width: 400px) {
+
+    .page-title h1 {
+        font-size: 25px;
+    }
+
+    section {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .filter button {
+        font-size: 12px;
+    }
+
 }
