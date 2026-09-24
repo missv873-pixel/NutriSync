@@ -2,19 +2,16 @@
    NUTRISYNC AUTHENTICATION
 ========================================== */
 
+const API_BASE_URL = "https://nutrisync-3m4h.onrender.com";
+
 
 /* ==========================================
    SHOW LOGIN FORM
 ========================================== */
 
 function showLogin() {
-
-    document.getElementById("loginForm").style.display =
-        "block";
-
-    document.getElementById("registerForm").style.display =
-        "none";
-
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("registerForm").style.display = "none";
     clearMessages();
 }
 
@@ -24,13 +21,8 @@ function showLogin() {
 ========================================== */
 
 function showRegister() {
-
-    document.getElementById("loginForm").style.display =
-        "none";
-
-    document.getElementById("registerForm").style.display =
-        "block";
-
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registerForm").style.display = "block";
     clearMessages();
 }
 
@@ -40,22 +32,14 @@ function showRegister() {
 ========================================== */
 
 function clearMessages() {
-
-    const loginMessage =
-        document.getElementById("loginMessage");
-
-    const registerMessage =
-        document.getElementById("registerMessage");
+    const loginMessage = document.getElementById("loginMessage");
+    const registerMessage = document.getElementById("registerMessage");
 
     loginMessage.textContent = "";
-
     registerMessage.textContent = "";
 
-    loginMessage.className =
-        "message";
-
-    registerMessage.className =
-        "message";
+    loginMessage.className = "message";
+    registerMessage.className = "message";
 }
 
 
@@ -63,16 +47,9 @@ function clearMessages() {
    DISPLAY MESSAGE
 ========================================== */
 
-function showMessage(
-    element,
-    text,
-    type
-) {
-
+function showMessage(element, text, type) {
     element.textContent = text;
-
-    element.className =
-        "message " + type;
+    element.className = "message " + type;
 }
 
 
@@ -81,10 +58,7 @@ function showMessage(
 ========================================== */
 
 function isValidEmail(email) {
-
-    const emailPattern =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailPattern.test(email);
 }
 
@@ -93,206 +67,84 @@ function isValidEmail(email) {
    REGISTRATION
 ========================================== */
 
-function registerUser() {
+async function registerUser() {
+    const name = document.getElementById("registerName").value.trim();
+    const email = document.getElementById("registerEmail").value.trim().toLowerCase();
+    const password = document.getElementById("registerPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const message = document.getElementById("registerMessage");
 
-    const name =
-        document
-            .getElementById("registerName")
-            .value
-            .trim();
-
-
-    const email =
-        document
-            .getElementById("registerEmail")
-            .value
-            .trim()
-            .toLowerCase();
-
-
-    const password =
-        document
-            .getElementById("registerPassword")
-            .value;
-
-
-    const confirmPassword =
-        document
-            .getElementById("confirmPassword")
-            .value;
-
-
-    const message =
-        document.getElementById(
-            "registerMessage"
-        );
-
-
-    /* ------------------------------
-       EMPTY FIELD VALIDATION
-    ------------------------------ */
-
-    if (
-        !name ||
-        !email ||
-        !password ||
-        !confirmPassword
-    ) {
-
-        showMessage(
-            message,
-            "Please fill in all fields.",
-            "error"
-        );
-
+    if (!name || !email || !password || !confirmPassword) {
+        showMessage(message, "Please fill in all fields.", "error");
         return;
     }
-
-
-    /* ------------------------------
-       NAME VALIDATION
-    ------------------------------ */
 
     if (name.length < 2) {
-
-        showMessage(
-            message,
-            "Please enter a valid name.",
-            "error"
-        );
-
+        showMessage(message, "Please enter a valid name.", "error");
         return;
     }
-
-
-    /* ------------------------------
-       EMAIL VALIDATION
-    ------------------------------ */
 
     if (!isValidEmail(email)) {
-
-        showMessage(
-            message,
-            "Please enter a valid email address.",
-            "error"
-        );
-
+        showMessage(message, "Please enter a valid email address.", "error");
         return;
     }
-
-
-    /* ------------------------------
-       PASSWORD VALIDATION
-    ------------------------------ */
 
     if (password.length < 6) {
-
-        showMessage(
-            message,
-            "Password must contain at least 6 characters.",
-            "error"
-        );
-
+        showMessage(message, "Password must contain at least 6 characters.", "error");
         return;
     }
-
-
-    /* ------------------------------
-       CONFIRM PASSWORD
-    ------------------------------ */
 
     if (password !== confirmPassword) {
-
-        showMessage(
-            message,
-            "Passwords do not match.",
-            "error"
-        );
-
+        showMessage(message, "Passwords do not match.", "error");
         return;
     }
 
+    showMessage(message, "Creating your account...", "success");
 
-    /* ------------------------------
-       CHECK EXISTING USER
-    ------------------------------ */
+    try {
+        const response = await fetch(API_BASE_URL + "/api/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                password: password
+            })
+        });
 
-    const existingUser =
-        JSON.parse(
-            localStorage.getItem(
-                "nutrisyncUser"
-            )
-        );
+        const data = await response.json();
 
-
-    if (
-        existingUser &&
-        existingUser.email === email
-    ) {
+        if (!response.ok) {
+            showMessage(
+                message,
+                data.message || "Registration failed. Please try again.",
+                "error"
+            );
+            return;
+        }
 
         showMessage(
             message,
-            "An account with this email already exists.",
-            "error"
+            "Registration successful! Redirecting to login...",
+            "success"
         );
 
-        return;
-    }
+        document.getElementById("registerFormElement").reset();
 
-
-    /* ------------------------------
-       CREATE USER
-    ------------------------------ */
-
-    const user = {
-
-        name: name,
-
-        email: email,
-
-        password: password
-
-    };
-
-
-    localStorage.setItem(
-        "nutrisyncUser",
-        JSON.stringify(user)
-    );
-
-
-    /* ------------------------------
-       SUCCESS MESSAGE
-    ------------------------------ */
-
-    showMessage(
-        message,
-        "Registration successful! Redirecting to login...",
-        "success"
-    );
-
-
-    /* ------------------------------
-       CLEAR REGISTRATION FORM
-    ------------------------------ */
-
-    document.getElementById(
-        "registerFormElement"
-    ).reset();
-
-
-    /* ------------------------------
-       GO TO LOGIN
-    ------------------------------ */
-
-    setTimeout(
-        function () {
-
+        setTimeout(function () {
             showLogin();
+        }, 1200);
 
-        },
-        1200
-    );
+    } catch (error) {
+        console.error("Registration error:", error);
+        showMessage(
+            message,
+            "Unable to connect to NutriSync server. Please try again.",
+            "error"
+        );
+    }
 }
 
 
@@ -300,146 +152,71 @@ function registerUser() {
    LOGIN
 ========================================== */
 
-function loginUser() {
-
-    const email =
-        document
-            .getElementById("loginEmail")
-            .value
-            .trim()
-            .toLowerCase();
-
-
-    const password =
-        document
-            .getElementById("loginPassword")
-            .value;
-
-
-    const rememberMe =
-        document
-            .getElementById("rememberMe")
-            .checked;
-
-
-    const message =
-        document.getElementById(
-            "loginMessage"
-        );
-
-
-    /* ------------------------------
-       EMPTY FIELD VALIDATION
-    ------------------------------ */
+async function loginUser() {
+    const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const password = document.getElementById("loginPassword").value;
+    const rememberMe = document.getElementById("rememberMe").checked;
+    const message = document.getElementById("loginMessage");
 
     if (!email || !password) {
-
         showMessage(
             message,
             "Please enter your email and password.",
             "error"
         );
-
         return;
     }
 
-
-    /* ------------------------------
-       EMAIL VALIDATION
-    ------------------------------ */
-
     if (!isValidEmail(email)) {
-
         showMessage(
             message,
             "Please enter a valid email address.",
             "error"
         );
-
         return;
     }
 
+    showMessage(message, "Checking your account...", "success");
 
-    /* ------------------------------
-       GET REGISTERED USER
-    ------------------------------ */
+    try {
+        const response = await fetch(API_BASE_URL + "/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
 
-    const user =
-        JSON.parse(
-            localStorage.getItem(
-                "nutrisyncUser"
-            )
-        );
+        const data = await response.json();
 
-
-    /* ------------------------------
-       NO USER
-    ------------------------------ */
-
-    if (!user) {
-
-        showMessage(
-            message,
-            "No account found. Please register first.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    /* ------------------------------
-       CHECK LOGIN DETAILS
-    ------------------------------ */
-
-    if (
-        email === user.email &&
-        password === user.password
-    ) {
-
-
-        /* --------------------------
-           SAVE LOGIN STATUS
-        -------------------------- */
-
-        localStorage.setItem(
-            "nutrisyncLoggedIn",
-            "true"
-        );
-
-
-        if (rememberMe) {
-
-            localStorage.setItem(
-                "nutrisyncRememberMe",
-                "true"
+        if (!response.ok) {
+            showMessage(
+                message,
+                data.message || "Incorrect email or password.",
+                "error"
             );
-
-        } else {
-
-            localStorage.removeItem(
-                "nutrisyncRememberMe"
-            );
-
+            return;
         }
 
+        localStorage.setItem("nutrisyncLoggedIn", "true");
 
-        /* --------------------------
-           SAVE CURRENT USER
-        -------------------------- */
+        if (rememberMe) {
+            localStorage.setItem("nutrisyncRememberMe", "true");
+        } else {
+            localStorage.removeItem("nutrisyncRememberMe");
+        }
 
         localStorage.setItem(
             "nutrisyncCurrentUser",
             JSON.stringify({
-                name: user.name,
-                email: user.email
+                id: data.user.id,
+                name: data.user.name,
+                email: data.user.email
             })
         );
-
-
-        /* --------------------------
-           SUCCESS
-        -------------------------- */
 
         showMessage(
             message,
@@ -447,30 +224,17 @@ function loginUser() {
             "success"
         );
 
+        setTimeout(function () {
+            window.location.href = "dashboard.html";
+        }, 700);
 
-        /* --------------------------
-           OPEN DASHBOARD
-        -------------------------- */
-
-        setTimeout(
-            function () {
-
-                window.location.href =
-                    "dashboard.html";
-
-            },
-            700
-        );
-
-
-    } else {
-
+    } catch (error) {
+        console.error("Login error:", error);
         showMessage(
             message,
-            "Incorrect email or password.",
+            "Unable to connect to NutriSync server. Please try again.",
             "error"
         );
-
     }
 }
 
@@ -480,18 +244,11 @@ function loginUser() {
 ========================================== */
 
 function logoutUser() {
+    localStorage.removeItem("nutrisyncLoggedIn");
+    localStorage.removeItem("nutrisyncCurrentUser");
+    localStorage.removeItem("nutrisyncRememberMe");
 
-    localStorage.removeItem(
-        "nutrisyncLoggedIn"
-    );
-
-    localStorage.removeItem(
-        "nutrisyncCurrentUser"
-    );
-
-
-    window.location.href =
-        "auth.html";
+    window.location.href = "auth.html";
 }
 
 
@@ -500,22 +257,10 @@ function logoutUser() {
 ========================================== */
 
 function checkAuthentication() {
-
-    const loggedIn =
-        localStorage.getItem(
-            "nutrisyncLoggedIn"
-        );
-
-
-    /*
-       If the user is already logged in,
-       open the Dashboard directly.
-    */
+    const loggedIn = localStorage.getItem("nutrisyncLoggedIn");
 
     if (loggedIn === "true") {
-
-        window.location.href =
-            "dashboard.html";
+        window.location.href = "dashboard.html";
     }
 }
 
@@ -524,36 +269,24 @@ function checkAuthentication() {
    FORM SUBMISSION
 ========================================== */
 
-document
-    .getElementById("loginFormElement")
-    .addEventListener(
-        "submit",
-        function (event) {
+document.getElementById("loginFormElement").addEventListener(
+    "submit",
+    function (event) {
+        event.preventDefault();
+        loginUser();
+    }
+);
 
-            event.preventDefault();
-
-            loginUser();
-
-        }
-    );
-
-
-const registerFormElement =
-    document.getElementById("registerFormElement");
+const registerFormElement = document.getElementById("registerFormElement");
 
 if (registerFormElement) {
-
     registerFormElement.addEventListener(
         "submit",
         function (event) {
-
             event.preventDefault();
-
             registerUser();
-
         }
     );
-
 }
 
 
